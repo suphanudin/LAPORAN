@@ -3,185 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absen Laporan</title>
+    <title>Absen Laporan Profesional</title>
     <style>
-        /* PENGATURAN DASAR */
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        
+        .container { 
+            background: white; 
+            width: 100%; 
+            max-width: 1100px; /* Dibuat lebar agar mantap di desktop */
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            overflow: hidden; 
         }
 
-        /* CONTAINER UTAMA */
-        .main-container {
-            width: 100%;
-            max-width: 900px;
-            background-color: #ffffff;
-            margin: 40px 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
+        header { 
+            background: #8b0000; 
+            color: white; 
+            padding: 50px 20px; 
+            text-align: center; 
+            border-bottom: 8px solid #660000; 
+        }
+        header h1 { margin: 0; font-size: 35px; letter-spacing: 2px; }
+
+        .list { padding: 0; }
+
+        /* Membuat baris terlihat lebih penuh */
+        .row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 25px 40px; 
+            border-bottom: 1px solid #eee;
+            transition: 0.2s;
         }
 
-        /* HEADER MERAH PROFESIONAL */
-        header {
-            background-color: #8b0000; /* Merah Gelap */
-            color: #ffffff;
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 5px solid #660000;
+        /* Warna selang-seling agar tidak kosong */
+        .row:nth-child(even) { background-color: #fff9f9; }
+        .row:hover { background-color: #f1f1f1; }
+
+        .name-wrapper { display: flex; align-items: center; gap: 15px; }
+        
+        /* Ikon user kecil di depan nama */
+        .user-icon { 
+            background: #8b0000; 
+            color: white; 
+            width: 35px; 
+            height: 35px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 50%; 
+            font-size: 14px; 
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .name { font-size: 22px; font-weight: 600; color: #2c3e50; }
+        
+        .badge { 
+            padding: 10px 25px; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            font-weight: 800; 
+            min-width: 100px; 
+            text-align: center; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        header p {
-            margin: 10px 0 0;
-            font-size: 18px;
-            opacity: 0.9;
+        .selesai { background: #8b0000; color: white; }
+        .proses { background: #ffebeb; color: #8b0000; border: 1px solid #ffcccc; }
+
+        .footer { padding: 50px; text-align: center; background: #fdfdfd; }
+        .btn-wa { 
+            display: inline-block; 
+            background: #25d366; 
+            color: white; 
+            padding: 20px 50px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 20px;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.3);
         }
 
-        /* DAFTAR ABSEN */
-        .content {
-            padding: 30px;
-        }
-
-        .absen-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 25px;
-            border-bottom: 1px solid #eeeeee;
-            transition: background 0.3s;
-        }
-
-        .absen-item:last-child {
-            border-bottom: none;
-        }
-
-        .absen-item:hover {
-            background-color: #fffafa;
-        }
-
-        .nama-peserta {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333333;
-        }
-
-        /* BADGE STATUS */
-        .badge {
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        /* Status Selesai: Merah Tua */
-        .selesai {
-            background-color: #8b0000;
-            color: #ffffff;
-        }
-
-        /* Status Proses: Abu-abu/Merah Muda */
-        .proses {
-            background-color: #fce4e4;
-            color: #8b0000;
-            border: 1px solid #f9cccc;
-        }
-
-        /* RESPONSIF HP */
-        @media (max-width: 600px) {
-            header {
-                padding: 30px 15px;
-            }
-            header h1 {
-                font-size: 24px;
-            }
-            .nama-peserta {
-                font-size: 16px;
-            }
-            .absen-item {
-                padding: 15px;
-            }
-            .badge {
-                padding: 6px 12px;
-                font-size: 11px;
-            }
-            .main-container {
-                margin: 15px;
-            }
+        /* Penyesuaian untuk HP */
+        @media (max-width: 768px) {
+            .row { padding: 20px; flex-direction: column; gap: 15px; text-align: center; }
+            .name-wrapper { flex-direction: column; }
+            .name { font-size: 18px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <header>
-            <h1>ABSEN LAPORAN</h1>
-            <p>Status pengerjaan laporan</p>
-        </header>
+<div class="container">
+    <header>
+        <h1>ABSEN LAPORAN</h1>
+        <p>SISTEM MONITORING PENGERJAAN</p>
+    </header>
 
-        <div class="content">
-            <div class="absen-item">
-                <span class="nama-peserta">1. Muhamad Fauzi Nor Alif</span>
-                <span class="badge proses">PROSES</span>
+    <div class="list">
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">1</div>
+                <span class="name">Muhamad Fauzi Nor Alif</span>
             </div>
+            <span class="badge proses">PROSES</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">2. Rifki Khusnul Khotim</span>
-                <span class="badge proses">PROSES</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">2</div>
+                <span class="name">Rifki Khusnul Khotim</span>
             </div>
+            <span class="badge proses">PROSES</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">3. Apri Alpindo Anggara</span>
-                <span class="badge proses">PROSES</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">3</div>
+                <span class="name">Apri Alpindo Anggara</span>
             </div>
+            <span class="badge proses">PROSES</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">4. Jaenal Asikin</span>
-                <span class="badge proses">PROSES</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">4</div>
+                <span class="name">Jaenal Asikin</span>
             </div>
+            <span class="badge proses">PROSES</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">5. Ahmad Maulana</span>
-                <span class="badge selesai">SELESAI</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">5</div>
+                <span class="name">Ahmad Maulana</span>
             </div>
+            <span class="badge selesai">SELESAI</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">6. Adia Priantono</span>
-                <span class="badge proses">PROSES</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">6</div>
+                <span class="name">Adia Priantono</span>
             </div>
+            <span class="badge proses">PROSES</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">7. M. Iqbal</span>
-                <span class="badge selesai">SELESAI</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">7</div>
+                <span class="name">M. Iqbal</span>
             </div>
+            <span class="badge selesai">SELESAI</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">8. Natanael Dennes Christian</span>
-                <span class="badge proses">PROSES</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">8</div>
+                <span class="name">Natanael Dennes Christian</span>
             </div>
+            <span class="badge proses">PROSES</span>
+        </div>
 
-            <div class="absen-item">
-                <span class="nama-peserta">9. Sahriadi</span>
-                <span class="badge proses">PROSES</span>
+        <div class="row">
+            <div class="name-wrapper">
+                <div class="user-icon">9</div>
+                <span class="name">Sahriadi</span>
             </div>
+            <span class="badge proses">PROSES</span>
         </div>
     </div>
+
+    <div class="footer">
+        <a href="https://wa.me/6285874053845" target="_blank" class="btn-wa">💬 HUBUNGI VIA WHATSAPP</a>
+    </div>
+</div>
 
 </body>
 </html>
