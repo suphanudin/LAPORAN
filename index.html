@@ -3,153 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Yang Udah Kelar</title>
+    <title>Daftar Laporan</title>
     <style>
-        /* 1. Pengaturan Dasar */
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            background-color: #f0f2f5; 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-        }
-
-        /* 2. Container: Lebar di Desktop, Full di HP */
-        .container { 
-            background: white; 
-            width: 100%; 
-            max-width: 1100px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); 
-            overflow: hidden;
-        }
-
-        /* 3. Header: Dibuat lebih besar & mencolok */
-        header { 
-            background: #1f2937; 
-            color: white; 
-            padding: 60px 20px; 
-            text-align: center; 
-            border-bottom: 10px solid #25d366; 
-        }
-        header h1 { 
-            margin: 0; 
-            font-size: 40px; /* Ukuran Judul Besar */
-            letter-spacing: 2px; 
-            text-transform: uppercase;
-        }
-        header p { 
-            margin-top: 15px; 
-            opacity: 0.9; 
-            font-size: 20px; /* Sub-judul lebih jelas */
-            font-weight: 400;
-        }
-
-        /* 4. Daftar Laporan: Ukuran teks diperbesar */
-        .content { padding: 40px; }
-        .row { 
-            background: #ffffff; 
-            padding: 25px 35px; 
-            margin-bottom: 20px; 
-            border-radius: 15px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border: 2px solid #eef2f6;
-            transition: 0.3s;
-        }
-        .row:hover { 
-            transform: scale(1.02); 
-            border-color: #25d366; 
-        }
-        .name { 
-            font-size: 24px; /* Nama orang diperbesar */
-            font-weight: 700; 
-            color: #111827; 
-        }
-        .status { 
-            background: #dcfce7; 
-            color: #15803d; 
-            padding: 12px 25px; 
-            border-radius: 50px; 
-            font-size: 16px; 
-            font-weight: 800; 
-            letter-spacing: 1px;
-        }
-
-        /* 5. Tombol WA: Dibuat sangat besar agar mudah diklik di HP */
-        .footer { 
-            padding: 50px; 
-            text-align: center; 
-            background: #f8fafc; 
-        }
-        .btn-wa { 
-            display: inline-block; 
-            text-decoration: none; 
-            background: #25d366; 
-            color: white; 
-            padding: 25px 60px; 
-            border-radius: 15px; 
-            font-weight: bold; 
-            font-size: 22px; /* Tombol sangat besar */
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            transition: 0.3s;
-        }
-        .btn-wa:hover { 
-            background: #128c7e; 
-            transform: translateY(-5px); 
-        }
-
-        /* 6. Penyesuaian Khusus HP (Mobile Friendly) */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            header { padding: 50px 15px; }
-            header h1 { font-size: 28px; }
-            header p { font-size: 16px; }
-            .content { padding: 20px; }
-            .row { 
-                flex-direction: column; 
-                text-align: center; 
-                gap: 15px; 
-                padding: 20px;
-            }
-            .name { font-size: 22px; }
-            .btn-wa { 
-                width: 90%; 
-                padding: 20px; 
-                font-size: 18px; 
-            }
+        body { font-family: sans-serif; background-color: #f0f2f5; margin: 0; padding: 15px; display: flex; justify-content: center; }
+        .container { background: white; width: 100%; max-width: 1000px; border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        header { background: #1f2937; color: white; padding: 50px 20px; text-align: center; border-bottom: 8px solid #25d366; }
+        header h1 { margin: 0; font-size: 32px; text-transform: uppercase; }
+        .list { padding: 30px; }
+        .item { background: #f9fafb; padding: 25px; margin-bottom: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 2px solid #eee; }
+        .name { font-weight: bold; font-size: 22px; color: #333; }
+        .badge { background: #dcfce7; color: #15803d; padding: 10px 20px; border-radius: 30px; font-weight: bold; font-size: 14px; }
+        .footer { padding: 40px; text-align: center; }
+        .btn-wa { display: inline-block; text-decoration: none; background: #25d366; color: white; padding: 20px 40px; border-radius: 12px; font-weight: bold; font-size: 20px; }
+        @media (max-width: 600px) {
+            header h1 { font-size: 24px; }
+            .item { flex-direction: column; gap: 15px; text-align: center; }
+            .name { font-size: 20px; }
+            .btn-wa { width: 90%; }
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <header>
-        <h1>LAPORAN YANG UDAH KELAR</h1>
-        <p>YANG BELUM CHAT AJA LANGSUNG KE WHATSAPP</p>
-    </header>
-
-    <div class="content">
-        <div class="row">
-            <span class="name">1. AHMAD MAULANA</span>
-            <span class="status">SELESAI</span>
+    <div class="container">
+        <header>
+            <h1>LAPORAN YANG UDAH KELAR</h1>
+            <p>YANG BELUM CHAT AJA LANGSUNG</p>
+        </header>
+        <div class="list">
+            <div class="item"><span class="name">1. AHMAD MAULANA</span><span class="badge">SELESAI</span></div>
+            <div class="item"><span class="name">2. M. IQBAL</span><span class="badge">SELESAI</span></div>
         </div>
-        
-        <div class="row">
-            <span class="name">2. M. IQBAL</span>
-            <span class="status">SELESAI</span>
+        <div class="footer">
+            <a href="https://wa.me/6285874053845" class="btn-wa">💬 HUBUNGI VIA WHATSAPP</a>
         </div>
-        
-        </div>
-
-    <div class="footer">
-        <a href="https://wa.me/6285874053845" target="_blank" class="btn-wa">
-            💬 HUBUNGI VIA WHATSAPP
-        </a>
     </div>
-</div>
-
 </body>
 </html>
