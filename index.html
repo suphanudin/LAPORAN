@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Monitoring Laporan System</title>
+    <title>MONITORING LAPORAN</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #8b0000;
-            --primary-light: #b22222;
             --secondary: #0f172a;
             --accent: #10b981;
-            --bg: #f8fafc;
-            --white: #ffffff;
-            --text-slate: #64748b;
+            --bg: #ffffff; /* Putih bersih untuk kesan luas */
+            --row-alt: #f8fafc;
+            --text-main: #1e293b;
         }
 
         * { 
@@ -25,128 +24,148 @@
             margin: 0; 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background: var(--bg); 
-            color: var(--secondary);
-            overflow-x: hidden;
+            color: var(--text-main);
+            min-height: 100vh;
         }
 
-        /* --- ANIMASI FADE IN --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+        /* --- ANIMASI MASUK --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 1. MODAL PRIVASI (PREMIUM LOOK) --- */
+        /* --- 1. MODAL PRIVASI --- */
         #terms-toggle { display: none; }
         .overlay-terms {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.8); z-index: 10000;
+            background: rgba(15, 23, 42, 0.98); z-index: 10000;
             display: flex; justify-content: center; align-items: center;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
         }
         .terms-box {
-            background: var(--white); padding: 40px 30px; width: 90%; max-width: 400px;
-            border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-            text-align: center; animation: fadeInUp 0.6s ease;
-        }
-        .terms-box h2 { font-weight: 800; font-size: 22px; margin-bottom: 15px; }
-        .terms-content { 
-            font-size: 14px; color: var(--text-slate); line-height: 1.6;
-            margin-bottom: 25px;
+            background: white; padding: 40px 30px; width: 90%; max-width: 400px;
+            border-radius: 30px; text-align: center;
         }
         .btn-agree {
             display: block; background: var(--primary); color: white;
-            padding: 18px; border-radius: 20px; cursor: pointer;
-            font-weight: 700; transition: 0.3s; box-shadow: 0 10px 15px -3px rgba(139,0,0,0.3);
+            padding: 18px; border-radius: 15px; cursor: pointer;
+            font-weight: 800; margin-top: 25px;
         }
         #terms-toggle:checked ~ .overlay-terms { display: none; }
 
-        /* --- 2. DASHBOARD (DRAWER ANIMATION) --- */
+        /* --- 2. DASHBOARD (DRAWER) --- */
         #menu-toggle { display: none; }
-        
         .menu-label {
             position: fixed; left: 20px; top: 20px;
-            background: var(--white); color: var(--primary);
-            padding: 14px 22px; border-radius: 18px;
+            background: var(--primary); color: white;
+            padding: 12px 20px; border-radius: 12px;
             cursor: pointer; z-index: 2000; font-weight: 800;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            border: 1px solid rgba(0,0,0,0.02);
-            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.2);
         }
-
         .sidebar {
-            width: 85%; max-width: 320px; background: var(--white);
+            width: 80%; max-width: 300px; background: white;
             height: 100vh; position: fixed; left: -100%; top: 0;
-            z-index: 9000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; padding: 50px 25px;
+            z-index: 9000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; padding: 40px 20px;
+            box-shadow: 20px 0 50px rgba(0,0,0,0.1);
         }
-
         .click-outside {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 23, 42, 0.3); display: none; z-index: 8000;
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.2); display: none; z-index: 8000;
         }
-
         #menu-toggle:checked ~ .sidebar { left: 0; }
         #menu-toggle:checked ~ .click-outside { display: block; }
-        #menu-toggle:checked ~ .menu-label { opacity: 0; transform: scale(0.8); }
 
-        .sidebar h3 { font-weight: 800; color: var(--primary); margin-bottom: 40px; }
+        .sidebar h3 { color: var(--primary); font-weight: 800; margin-bottom: 30px; }
         .sidebar a, .info-label {
             color: var(--secondary); text-decoration: none; padding: 18px;
-            display: block; font-size: 16px; font-weight: 600; border-radius: 18px;
-            margin-bottom: 8px; transition: 0.2s;
+            display: block; font-weight: 600; border-radius: 15px; margin-bottom: 5px;
         }
-        .sidebar a:active { background: #f1f5f9; color: var(--primary); }
-
+        .info-box { max-height: 0; overflow: hidden; transition: 0.3s; background: #f1f5f9; border-radius: 15px; }
         #info-toggle { display: none; }
-        .info-box { 
-            max-height: 0; overflow: hidden; background: #f8fafc; 
-            transition: 0.4s ease; border-radius: 20px;
-        }
-        .info-box p { padding: 20px; font-size: 14px; color: var(--text-slate); margin: 0; line-height: 1.7; }
-        #info-toggle:checked ~ .info-box { max-height: 300px; margin-bottom: 15px; }
-
+        #info-toggle:checked ~ .info-box { max-height: 200px; margin-bottom: 10px; }
         .btn-wa {
             background: var(--accent); color: white; text-align: center;
-            padding: 18px; border-radius: 22px; text-decoration: none;
+            padding: 18px; border-radius: 20px; text-decoration: none;
             font-weight: 800; margin-top: auto;
-            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
         }
 
-        /* --- 3. MAIN CONTENT --- */
-        .main-content { padding: 110px 20px 50px; min-height: 100vh; animation: fadeInUp 0.8s ease; }
+        /* --- 3. KONTEN UTAMA --- */
+        .main-content {
+            padding: 100px 0 0; /* Full width kontainer */
+            animation: fadeIn 0.8s ease;
+        }
 
-        .header-title { text-align: center; margin-bottom: 40px; }
-        .header-title h1 { font-size: 28px; font-weight: 800; margin: 0; letter-spacing: -1px; }
-        .header-title p { font-size: 15px; color: var(--text-slate); margin-top: 8px; font-weight: 500; }
+        .header-title { 
+            text-align: center; 
+            padding: 0 20px;
+            margin-bottom: 40px; 
+        }
+        .header-title h1 { 
+            font-size: 26px; 
+            font-weight: 800; 
+            margin: 0; 
+            color: var(--secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase; /* HURUF KAPITAL */
+        }
+        .header-title p { 
+            font-size: 14px; 
+            color: var(--text-muted); 
+            margin-top: 8px; 
+            font-weight: 500;
+            text-transform: uppercase; /* HURUF KAPITAL */
+        }
 
-        .list-card {
-            background: var(--white); border-radius: 35px;
-            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.03); overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.02);
+        /* TABEL MONITORING FULL SCREEN HP */
+        .list-wrapper {
+            width: 100%;
+            background: var(--bg);
         }
 
         .row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 22px 25px; border-bottom: 1px solid #f8fafc;
-            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: 0.2s;
         }
-        .row:active { background: #fafafa; }
-        .name { font-size: 15px; font-weight: 600; color: var(--secondary); flex: 1; padding-right: 15px; }
+        .row:nth-child(even) { background: var(--row-alt); }
+
+        .num {
+            font-weight: 800;
+            color: var(--primary);
+            width: 35px; /* Lebar tetap untuk nomor agar nama sejajar */
+            font-size: 16px;
+        }
+
+        .name {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--secondary);
+            padding-right: 10px;
+        }
 
         /* Badge Status */
         .badge {
-            padding: 8px 16px; border-radius: 14px; font-size: 11px; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 0.8px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .selesai { background: #ecfdf5; color: #059669; }
-        .proses { background: #f8fafc; color: #94a3b8; border: 1px solid #f1f5f9; }
+        .selesai { background: #dcfce7; color: #15803d; }
+        .proses { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
 
-        /* Desktop Optimization */
+        /* PC View Optimization */
         @media (min-width: 1024px) {
-            .sidebar { left: 0; width: 320px; border-right: 1px solid #f1f5f9; }
-            .main-content { margin-left: 320px; padding-top: 60px; }
+            .sidebar { left: 0; width: 320px; }
+            .main-content { margin-left: 320px; padding-top: 50px; }
             .menu-label, .click-outside { display: none !important; }
+            .list-wrapper { padding: 0 40px; }
+            .row { border-radius: 15px; margin-bottom: 5px; border: none; }
         }
     </style>
 </head>
@@ -155,11 +174,11 @@
     <input type="checkbox" id="terms-toggle">
     <div class="overlay-terms">
         <div class="terms-box">
-            <h2>Pemberitahuan Sistem</h2>
-            <div class="terms-content">
-                Selamat datang di platform Monitoring resmi. Data yang ditampilkan adalah hasil pengerjaan real-time. Kami menjamin kerahasiaan dan keamanan informasi Anda.
+            <h2 style="text-transform: uppercase;">Kebijakan Layanan</h2>
+            <div style="font-size: 14px; color: #64748b; line-height: 1.6;">
+                SELAMAT DATANG DI SISTEM MONITORING RESMI. DATA YANG DITAMPILKAN ADALAH HASIL PENGERJAAN SECARA REAL-TIME.
             </div>
-            <label for="terms-toggle" class="btn-agree">MENGERTI & LANJUTKAN</label>
+            <label for="terms-toggle" class="btn-agree">SAYA SETUJU</label>
         </div>
     </div>
 
@@ -169,14 +188,13 @@
 
     <div class="sidebar">
         <h3>DASHBOARD</h3>
-        <a href="#">🏠 Beranda Utama</a>
+        <a href="#">🏠 BERANDA</a>
         
         <input type="checkbox" id="info-toggle">
-        <label for="info-toggle" class="info-label">ℹ️ Informasi Layanan <span style="float:right">▼</span></label>
+        <label for="info-toggle" class="info-label">ℹ️ INFO LAYANAN <span style="float:right">▼</span></label>
         <div class="info-box">
-            <p>
-                <b>Data Update:</b> Otomatis setiap ada perubahan pengerjaan.<br><br>
-                <b>Ketentuan:</b> Seluruh laporan dikerjakan secara profesional sesuai antrean.
+            <p style="padding: 15px; font-size: 13px; line-height: 1.6; margin: 0;">
+                SISTEM INI MENGUPDATE STATUS SECARA OTOMATIS BERDASARKAN PROSES PENGERJAAN DI TIM ADMINISTRASI.
             </p>
         </div>
 
@@ -187,46 +205,55 @@
 
     <div class="main-content">
         <div class="header-title">
-            <h1>Monitoring Laporan</h1>
-            <p>Status Pengerjaan Real-Time</p>
+            <h1>MONITORING LAPORAN</h1>
+            <p>STATUS PENGERJAAN REAL-TIME</p>
         </div>
 
-        <div class="list-card">
+        <div class="list-wrapper">
             <div class="row">
-                <span class="name">01. Muhamad Fauzi Nor Alif</span>
-                <span class="badge proses">PROSES</span>
+                <div class="num">1</div>
+                <div class="name">Muhamad Fauzi Nor Alif</div>
+                <div class="badge proses">PROSES</div>
             </div>
             <div class="row">
-                <span class="name">02. Rifki Khusnul Khotim</span>
-                <span class="badge proses">PROSES</span>
+                <div class="num">2</div>
+                <div class="name">Rifki Khusnul Khotim</div>
+                <div class="badge proses">PROSES</div>
             </div>
             <div class="row">
-                <span class="name">03. Apri Alpindo Anggara</span>
-                <span class="badge proses">PROSES</span>
+                <div class="num">3</div>
+                <div class="name">Apri Alpindo Anggara</div>
+                <div class="badge proses">PROSES</div>
             </div>
             <div class="row">
-                <span class="name">04. Jaenal Asikin</span>
-                <span class="badge proses">PROSES</span>
+                <div class="num">4</div>
+                <div class="name">Jaenal Asikin</div>
+                <div class="badge proses">PROSES</div>
             </div>
             <div class="row">
-                <span class="name">05. Ahmad Maulana</span>
-                <span class="badge selesai">SELESAI</span>
+                <div class="num">5</div>
+                <div class="name">Ahmad Maulana</div>
+                <div class="badge selesai">SELESAI</div>
             </div>
             <div class="row">
-                <span class="name">06. Adia Priantono</span>
-                <span class="badge proses">PROSES</span>
+                <div class="num">6</div>
+                <div class="name">Adia Priantono</div>
+                <div class="badge proses">PROSES</div>
             </div>
             <div class="row">
-                <span class="name">07. M. Iqbal</span>
-                <span class="badge selesai">SELESAI</span>
+                <div class="num">7</div>
+                <div class="name">M. Iqbal</div>
+                <div class="badge selesai">SELESAI</div>
             </div>
             <div class="row">
-                <span class="name">08. Natanael Dennes Christian</span>
-                <span class="badge proses">PROSES</span>
+                <div class="num">8</div>
+                <div class="name">Natanael Dennes Christian</div>
+                <div class="badge proses">PROSES</div>
             </div>
             <div class="row">
-                <span class="name">09. Sahriadi</span>
-                <span class="badge proses">PROSES</span>
+                <div class="num">9</div>
+                <div class="name">Sahriadi</div>
+                <div class="badge proses">PROSES</div>
             </div>
         </div>
     </div>
