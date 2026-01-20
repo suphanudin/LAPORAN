@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MONITORING HOLOGRAM</title>
+    <title>MONITORING LAPORAN</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-glow: rgba(139, 0, 0, 0.8);
-            --hologram-cyan: rgba(0, 255, 255, 0.3);
-            --bg-dark: #050505;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border-glass: rgba(255, 255, 255, 0.15);
+            --primary: #8b0000;
+            --secondary: #0f172a;
+            --accent: #10b981;
+            --radius: 15px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -19,151 +18,156 @@
         body { 
             margin: 0; 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 80%),
-                repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 2px);
-            color: #e0e0e0;
+            background: #f8fafc; 
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* --- ANIMASI SCANLINE GLOBAL --- */
-        body::before {
-            content: " ";
-            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-            z-index: 9999;
-            pointer-events: none;
-            animation: scanline 8s linear infinite;
+        /* --- ANIMASI TEKAN --- */
+        .sidebar-link, .row, .btn-wa {
+            transition: transform 0.1s ease;
+        }
+        .sidebar-link:active, .row:active, .btn-wa:active {
+            transform: scale(0.96);
         }
 
-        @keyframes scanline {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
-
-        /* --- HEADER HOLOGRAM --- */
+        /* --- HEADER HOLOGRAM (SLIM & KOTAK) --- */
         .header-section {
-            background: rgba(139, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            background: var(--primary);
+            position: relative;
             padding: 55px 20px 25px;
             text-align: center;
-            border-bottom: 2px solid var(--primary-glow);
-            box-shadow: 0 0 20px var(--primary-glow);
-            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        /* Efek Cahaya Bergerak */
+        .header-section::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -150%;
+            width: 50%; height: 100%;
+            background: linear-gradient(
+                to right, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            transform: skewX(-25deg);
+            animation: shine 4s infinite;
+        }
+
+        /* Garis Scanline Digital */
+        .header-section::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.05) 0px,
+                rgba(0, 0, 0, 0.05) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { left: -150%; }
+            100% { left: 150%; }
         }
 
         .header-section h1 { 
-            font-size: 18px; color: #fff; margin: 0; 
-            letter-spacing: 3px; text-transform: uppercase; font-weight: 800;
-            text-shadow: 0 0 10px #fff, 0 0 20px var(--primary-glow);
+            font-size: 18px; color: white; margin: 0; 
+            letter-spacing: 2px; text-transform: uppercase; font-weight: 800;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+            position: relative; z-index: 1;
         }
 
-        /* --- MENU BUTTON --- */
+        .header-section p {
+            font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 5px; 
+            letter-spacing: 1px; font-weight: 600; position: relative; z-index: 1;
+        }
+
+        /* --- DASHBOARD / SIDEBAR --- */
+        #menu-toggle { display: none; }
         .menu-btn {
             position: fixed; left: 15px; top: 12px; z-index: 2000;
-            background: var(--glass); color: #fff;
-            padding: 8px 15px; border-radius: 8px; font-size: 11px; font-weight: 800;
-            border: 1px solid var(--border-glass);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15); color: white;
+            padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(8px);
         }
-
-        /* --- SIDEBAR GLASSMORPHISM --- */
-        #menu-toggle { display: none; }
         .sidebar {
             position: fixed; left: -100%; top: 0; width: 80%; max-width: 280px;
-            height: 100vh; background: rgba(10, 10, 10, 0.9); z-index: 9000; 
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 70px 20px 20px; border-right: 1px solid var(--primary-glow);
-            backdrop-filter: blur(15px);
-            display: flex; flex-direction: column;
+            height: 100vh; background: white; z-index: 9000; 
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 70px 20px 20px; border-radius: 0 20px 20px 0;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column;
         }
-        #menu-toggle:checked ~ .sidebar { left: 0; box-shadow: 20px 0 50px rgba(139, 0, 0, 0.2); }
+        #menu-toggle:checked ~ .sidebar { left: 0; }
         
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); display: none; z-index: 8000;
+        }
+        #menu-toggle:checked ~ .overlay-bg { display: block; }
+
         .sidebar-link {
-            padding: 15px; background: var(--glass); margin-bottom: 10px;
-            border-radius: 12px; text-decoration: none; color: #fff;
-            font-weight: 700; font-size: 13px; border: 1px solid var(--border-glass);
-        }
-
-        /* --- LIST MONITORING HOLOGRAM --- */
-        .list-wrapper { width: 100%; padding: 10px 0; }
-        .row { 
-            display: flex; align-items: center; padding: 18px 20px; 
-            border-bottom: 1px solid var(--border-glass);
-            background: linear-gradient(90deg, transparent, var(--glass), transparent);
-            margin: 5px 0;
-            transition: 0.3s;
-        }
-        .row:active { background: rgba(139, 0, 0, 0.1); transform: scale(0.98); }
-
-        .num { font-weight: 800; color: #ff4d4d; width: 25px; font-size: 14px; text-shadow: 0 0 5px #ff4d4d; }
-        .name { flex: 1; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #fff; padding-left: 10px; letter-spacing: 0.5px; }
-        
-        /* BADGE GLOW */
-        .badge { 
-            padding: 6px 12px; border-radius: 6px; font-size: 9px; font-weight: 800; 
-            min-width: 80px; text-align: center; border: 1px solid transparent;
-        }
-        .selesai { 
-            background: rgba(16, 185, 129, 0.1); color: #10b981; 
-            border-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
-        }
-        .proses { 
-            background: rgba(255, 255, 255, 0.05); color: #94a3b8; 
-            border-color: rgba(255, 255, 255, 0.2); 
+            padding: 15px; background: #f8fafc; margin-bottom: 10px;
+            border-radius: 12px; text-decoration: none; color: var(--secondary);
+            font-weight: 700; font-size: 14px; display: block;
         }
 
         .btn-wa {
-            display: block; background: var(--primary-glow); color: white;
-            padding: 16px; text-align: center; border-radius: 12px;
-            text-decoration: none; font-weight: 800; margin-top: auto;
-            box-shadow: 0 0 20px var(--primary-glow);
-            border: 1px solid rgba(255,255,255,0.2);
+            display: block; background: var(--accent); color: white;
+            padding: 16px; text-align: center; border-radius: 15px;
+            text-decoration: none; font-weight: 800; margin-top: auto; font-size: 14px;
         }
 
-        .overlay-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: none; z-index: 8000;
-        }
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
+        /* --- LIST MONITORING --- */
+        .list-wrapper { width: 100%; background: white; }
+        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
+        .num { font-weight: 800; color: var(--primary); width: 25px; font-size: 14px; }
+        .name { flex: 1; font-size: 13px; font-weight: 600; text-transform: uppercase; color: var(--secondary); padding-left: 5px; }
+        
+        .badge { padding: 7px 14px; border-radius: 10px; font-size: 9px; font-weight: 800; min-width: 80px; text-align: center; }
+        .selesai { background: #dcfce7; color: #15803d; }
+        .proses { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
 
     </style>
 </head>
 <body>
 
     <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-btn">📡 SYSTEM MENU</label>
+    <label for="menu-toggle" class="menu-btn">☰ MENU</label>
     <label for="menu-toggle" class="overlay-bg"></label>
     
     <div class="sidebar">
-        <h3 style="color: #ff4d4d; font-weight: 800; margin-bottom: 25px; letter-spacing: 2px;">DASHBOARD_V1</h3>
-        <a href="#" class="sidebar-link">DATA CENTER</a>
-        <div class="sidebar-link" style="border-left: 3px solid #ff4d4d;">
-            CREDIT: <b>50.000</b><br>
-            VIRTUAL: <b>085783252407</b>
+        <h3 style="color: var(--primary); font-weight: 800; margin-bottom: 20px; padding-left: 5px;">DASHBOARD</h3>
+        <a href="#" class="sidebar-link">🏠 BERANDA</a>
+        <div class="sidebar-link" style="background: #fff5f5; border: 1px solid #ffebeb;">
+            💰 JOKI: <b>50K</b><br>
+            💳 DANA: <b>085783252407</b>
         </div>
         
-        <a href="https://wa.me/6285874053845" class="btn-wa">CONNECT ADMIN</a>
+        <a href="https://wa.me/6285874053845" class="btn-wa">CHAT ADMIN</a>
     </div>
 
     <div class="header-section">
-        <h1>MONITORING_SYSTEM</h1>
-        <p style="font-size: 9px; color: #ff4d4d; margin-top: 5px; letter-spacing: 2px; font-weight: 800;">ACTIVE_HOLOGRAPHIC_INTERFACE</p>
+        <h1>MONITORING LAPORAN</h1>
+        <p>PENGERJAAN REAL-TIME</p>
     </div>
 
     <div class="list-wrapper">
-        <div class="row"><div class="num">01</div><div class="name">Muhamad Fauzi Nor Alif</div><div class="badge proses">IN_PROGRESS</div></div>
-        <div class="row"><div class="num">02</div><div class="name">Rifki Khusnul Khotim</div><div class="badge proses">IN_PROGRESS</div></div>
-        <div class="row"><div class="num">03</div><div class="name">Apri Alpindo Anggara</div><div class="badge proses">IN_PROGRESS</div></div>
-        <div class="row"><div class="num">04</div><div class="name">Jaenal Asikin</div><div class="badge proses">IN_PROGRESS</div></div>
-        <div class="row"><div class="num">05</div><div class="name">Ahmad Maulana</div><div class="badge selesai">COMPLETED</div></div>
-        <div class="row"><div class="num">06</div><div class="name">Adia Priantono</div><div class="badge proses">IN_PROGRESS</div></div>
-        <div class="row"><div class="num">07</div><div class="name">M. Iqbal</div><div class="badge selesai">COMPLETED</div></div>
-        <div class="row"><div class="num">08</div><div class="name">Natanael Dennes Christian</div><div class="badge proses">IN_PROGRESS</div></div>
-        <div class="row"><div class="num">09</div><div class="name">Sahriadi</div><div class="badge proses">IN_PROGRESS</div></div>
+        <div class="row"><div class="num">1</div><div class="name">Muhamad Fauzi Nor Alif</div><div class="badge proses">PROSES</div></div>
+        <div class="row"><div class="num">2</div><div class="name">Rifki Khusnul Khotim</div><div class="badge proses">PROSES</div></div>
+        <div class="row"><div class="num">3</div><div class="name">Apri Alpindo Anggara</div><div class="badge proses">PROSES</div></div>
+        <div class="row"><div class="num">4</div><div class="name">Jaenal Asikin</div><div class="badge proses">PROSES</div></div>
+        <div class="row"><div class="num">5</div><div class="name">Ahmad Maulana</div><div class="badge selesai">SELESAI</div></div>
+        <div class="row"><div class="num">6</div><div class="name">Adia Priantono</div><div class="badge proses">PROSES</div></div>
+        <div class="row"><div class="num">7</div><div class="name">M. Iqbal</div><div class="badge selesai">SELESAI</div></div>
+        <div class="row"><div class="num">8</div><div class="name">Natanael Dennes Christian</div><div class="badge proses">PROSES</div></div>
+        <div class="row"><div class="num">9</div><div class="name">Sahriadi</div><div class="badge proses">PROSES</div></div>
     </div>
 
 </body>
