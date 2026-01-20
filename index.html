@@ -13,7 +13,7 @@
             --dana-blue: #008ced;
             --bg: #ffffff;
             --text-main: #1e293b;
-            --radius: 20px;
+            --radius: 15px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -37,31 +37,32 @@
         .terms-box {
             background: white; padding: 30px; width: 90%; max-width: 400px;
             border-radius: var(--radius); text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
         .btn-agree {
             display: block; background: var(--primary); color: white;
-            padding: 15px; border-radius: 12px; cursor: pointer;
+            padding: 15px; border-radius: 10px; cursor: pointer;
             font-weight: 800; margin-top: 20px;
         }
         #terms-toggle:checked ~ .overlay-terms { display: none; }
 
-        /* --- 2. DASHBOARD (LENGKUNG) --- */
+        /* --- 2. DASHBOARD --- */
         #menu-toggle { display: none; }
         .menu-label {
             position: fixed; left: 15px; top: 12px;
-            background: rgba(255,255,255,0.15); color: white;
-            padding: 8px 15px; border-radius: 8px;
+            background: rgba(255,255,255,0.2); color: white;
+            padding: 8px 16px; border-radius: 8px;
             cursor: pointer; z-index: 2000; font-weight: 800;
             font-size: 12px; border: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
         .sidebar {
             width: 80%; max-width: 300px; background: white;
-            height: 96vh; position: fixed; left: -100%; top: 2vh;
-            z-index: 9000; transition: 0.3s;
-            display: flex; flex-direction: column; padding: 30px 20px;
+            height: 100vh; position: fixed; left: -100%; top: 0;
+            z-index: 9000; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; padding: 60px 20px 20px;
             border-radius: 0 var(--radius) var(--radius) 0;
-            box-shadow: 20px 0 50px rgba(0,0,0,0.1);
+            box-shadow: 15px 0 40px rgba(0,0,0,0.1);
         }
         .click-outside {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -70,56 +71,60 @@
         #menu-toggle:checked ~ .sidebar { left: 0; }
         #menu-toggle:checked ~ .click-outside { display: block; }
 
-        .sidebar h3 { color: var(--primary); font-weight: 800; margin-bottom: 20px; font-size: 16px; }
+        .sidebar h3 { color: var(--primary); font-weight: 800; margin-bottom: 25px; font-size: 18px; padding-left: 10px; }
         .sidebar-link {
-            color: var(--secondary); text-decoration: none; padding: 14px;
-            display: block; font-weight: 700; border-radius: 10px; margin-bottom: 5px; font-size: 14px;
+            color: var(--secondary); text-decoration: none; padding: 14px 18px;
+            display: block; font-weight: 700; border-radius: 12px; margin-bottom: 8px; font-size: 14px;
+            transition: 0.2s; background: #f8fafc;
         }
+        .sidebar-link:active { background: #f1f5f9; transform: scale(0.98); }
 
-        #info-toggle, #pay-toggle { display: none; }
-        .collapsible-box { max-height: 0; overflow: hidden; transition: 0.3s ease; background: #f8fafc; border-radius: 10px; }
-        .collapsible-content { padding: 15px; font-size: 13px; }
-        #info-toggle:checked ~ .info-box, #pay-toggle:checked ~ .pay-box { max-height: 200px; margin-bottom: 10px; border: 1px solid #eee; }
+        #pay-toggle, #info-toggle { display: none; }
+        .collapsible-box { max-height: 0; overflow: hidden; transition: 0.3s ease; background: #fff; border-radius: 12px; }
+        .collapsible-content { padding: 15px; font-size: 13px; line-height: 1.6; border: 1.5px solid #f1f5f9; margin-bottom: 10px; border-radius: 12px;}
+        
+        #pay-toggle:checked ~ .pay-box, #info-toggle:checked ~ .info-box { max-height: 200px; }
 
         .btn-wa {
             background: var(--accent); color: white; text-align: center;
-            padding: 15px; border-radius: 12px; text-decoration: none;
-            font-weight: 800; margin-top: auto; font-size: 14px;
+            padding: 18px; border-radius: 15px; text-decoration: none;
+            font-weight: 800; margin-top: auto; font-size: 15px;
+            box-shadow: 0 8px 15px rgba(16, 185, 129, 0.2);
         }
 
         /* --- 3. KONTEN UTAMA --- */
         .main-content { padding: 0; }
 
-        /* HEADER SLIM (KOTAK TEGAS & LEBIH PENDEK) */
+        /* HEADER SLIM (TANPA GARIS HITAM) */
         .header-section {
             background: var(--primary);
-            padding: 55px 20px 20px; /* Ukuran diperkecil drastis */
+            padding: 50px 20px 25px;
             text-align: center;
-            border-bottom: 4px solid #4a0000;
+            border: none; /* GARIS HITAM DIHAPUS */
             border-radius: 0;
         }
 
         .header-section h1 { 
-            font-size: 18px; /* Font lebih kecil agar rapi */
-            font-weight: 800; margin: 0; color: white;
-            letter-spacing: 1.5px; text-transform: uppercase;
+            font-size: 18px; font-weight: 800; margin: 0; color: white;
+            letter-spacing: 2px; text-transform: uppercase;
         }
 
         .header-section p { 
-            font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 5px; 
+            font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 6px; 
             font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
         }
 
         /* LIST MONITORING */
-        .list-wrapper { width: 100%; background: var(--bg); }
-        .row { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f1f5f9; }
+        .list-wrapper { width: 100%; background: #fff; padding-top: 10px; }
+        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f8fafc; }
 
-        .num { font-weight: 800; color: var(--primary); width: 25px; font-size: 14px; }
-        .name { flex: 1; font-size: 13px; font-weight: 600; color: var(--secondary); text-transform: uppercase; }
+        .num { font-weight: 800; color: var(--primary); width: 30px; font-size: 14px; text-align: center; }
+        .name { flex: 1; font-size: 13px; font-weight: 600; color: var(--secondary); text-transform: uppercase; padding-left: 10px;}
 
+        /* BADGE STATUS (DIPERBAIKI AGAR JELAS DI GAMBAR) */
         .badge { 
-            padding: 6px 12px; border-radius: 8px; font-size: 9px; 
-            font-weight: 800; text-transform: uppercase; 
+            padding: 7px 14px; border-radius: 10px; font-size: 9px; 
+            font-weight: 800; text-transform: uppercase; min-width: 80px; text-align: center;
         }
         .selesai { background: #dcfce7; color: #15803d; }
         .proses { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
@@ -136,11 +141,11 @@
     <input type="checkbox" id="terms-toggle">
     <div class="overlay-terms">
         <div class="terms-box">
-            <h2 style="font-size: 18px; text-transform: uppercase;">Kebijakan Layanan</h2>
-            <div style="font-size: 12px; color: #333; line-height: 1.5;">
-                SISTEM MONITORING REAL-TIME. DATA DIUPDATE BERKALA.
+            <h2 style="font-size: 16px; text-transform: uppercase;">Kebijakan Layanan</h2>
+            <div style="font-size: 12px; color: #64748b; line-height: 1.5;">
+                Dilarang menyebarkan data tanpa izin. Status pengerjaan bersifat final.
             </div>
-            <label for="terms-toggle" class="btn-agree">SAYA SETUJU</label>
+            <label for="terms-toggle" class="btn-agree">SAYA MENGERTI</label>
         </div>
     </div>
 
@@ -156,16 +161,16 @@
         <label for="pay-toggle" class="sidebar-link">💳 PEMBAYARAN <span style="float:right">▼</span></label>
         <div class="collapsible-box pay-box">
             <div class="collapsible-content">
-                JOKI: <b>Rp 50.000</b><br>
-                DANA: <b>085783252407</b>
+                HARGA JOKI: <b style="color:var(--primary)">Rp 50.000</b><br>
+                DANA: <b style="color:var(--dana-blue)">085783252407</b>
             </div>
         </div>
 
         <input type="checkbox" id="info-toggle">
-        <label for="info-toggle" class="sidebar-link">ℹ️ INFO <span style="float:right">▼</span></label>
+        <label for="info-toggle" class="sidebar-link">ℹ️ INFO LAYANAN <span style="float:right">▼</span></label>
         <div class="collapsible-box info-box">
             <div class="collapsible-content">
-                STATUS DIUPDATE BERDASARKAN ANTREAN.
+                Pengerjaan dilakukan sesuai antrean yang masuk. Silahkan konfirmasi via WhatsApp.
             </div>
         </div>
 
