@@ -19,12 +19,11 @@
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             z-index: 2000;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: 0.5s;
         }
         .terms-box {
             background: white;
@@ -66,30 +65,34 @@
             padding: 30px 20px; 
             text-align: center; 
             border-bottom: 1px solid rgba(255,255,255,0.1); 
+            margin-bottom: 10px;
         }
 
-        /* INFO JOKI DI DALAM SIDEBAR */
-        .sidebar-info {
-            padding: 20px;
-            background: rgba(0,0,0,0.2);
-            margin: 15px;
-            border-radius: 10px;
-            border: 1px dashed rgba(255,255,255,0.4);
-            text-align: center;
-        }
-        .sidebar-info h3 { margin: 0; font-size: 16px; color: #ffdbdb; }
-        .sidebar-info .price { font-size: 22px; font-weight: bold; margin: 10px 0; display: block; }
-        .sidebar-info p { font-size: 11px; opacity: 0.8; margin: 0; }
+        .sidebar-header h2 { font-size: 20px; margin: 0; letter-spacing: 1px; }
 
-        .sidebar a {
+        .sidebar a, .info-trigger {
             text-decoration: none;
             color: rgba(255,255,255,0.8);
             padding: 15px 25px;
             display: block;
             transition: 0.3s;
+            cursor: pointer;
+            font-size: 15px;
         }
-        .sidebar a:hover { background: rgba(255,255,255,0.1); color: white; }
+        .sidebar a:hover, .info-trigger:hover { background: rgba(255,255,255,0.1); color: white; }
         .sidebar a.active { background: white; color: #8b0000; font-weight: bold; }
+
+        /* FITUR INFORMASI JOKI (DROPDOWN/BOX) */
+        .info-content {
+            background: rgba(0,0,0,0.2);
+            margin: 0 15px 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            border-left: 4px solid #ffdbdb;
+        }
+        .info-content strong { display: block; color: #ffdbdb; margin-bottom: 5px; font-size: 14px; }
+        .info-content p { margin: 5px 0; line-height: 1.4; opacity: 0.9; }
 
         /* KONTEN UTAMA */
         .main-content {
@@ -97,8 +100,7 @@
             flex: 1;
             padding: 40px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             transition: 0.3s;
         }
 
@@ -130,11 +132,10 @@
             display: inline-block;
         }
 
-        /* TOMBOL MENU (HANYA HP) */
+        /* MENU HP */
         .menu-btn { display: none; }
         #menu-toggle { display: none; }
 
-        /* RESPONSIVE HP */
         @media (max-width: 850px) {
             .sidebar { left: -280px; }
             #menu-toggle:checked ~ .sidebar { left: 0; }
@@ -152,8 +153,8 @@
     <input type="checkbox" id="terms-toggle">
     <div class="overlay">
         <div class="terms-box">
-            <h2>Syarat & Ketentuan</h2>
-            <p>Dengan masuk, Anda setuju bahwa pengerjaan joki adalah final (Tanpa Revisi) dan biaya flat Rp 50.000 per laporan.</p>
+            <h2>⚠️ Perhatian</h2>
+            <p>Sistem ini hanya memantau laporan. Dengan masuk, Anda menyetujui syarat & ketentuan layanan joki kami.</p>
             <label for="terms-toggle" class="btn-agree">SAYA SETUJU</label>
         </div>
     </div>
@@ -166,13 +167,19 @@
             <h2>DASHBOARD</h2>
         </div>
 
-        <div class="sidebar-info">
-            <h3>INFO JOKI</h3>
-            <span class="price">Rp 50.000</span>
-            <p>Pengerjaan Cepat<br>Tanpa Revisi</p>
+        <a href="#" class="active">🏠 Home</a>
+        
+        <div class="info-trigger">ℹ️ Informasi Joki</div>
+        <div class="info-content">
+            <strong>HARGA FLAT:</strong>
+            <p>Rp 50.000 / Laporan</p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
+            <strong>KETENTUAN:</strong>
+            <p>• Pengerjaan Cepat</p>
+            <p>• Tanpa Revisi</p>
+            <p>• Langsung Jadi</p>
         </div>
 
-        <a href="#" class="active">🏠 Home</a>
         <a href="#">📊 Statistik</a>
         <a href="#">⚙️ Tools</a>
         <a href="https://wa.me/6285874053845" target="_blank">📞 Hubungi Admin</a>
@@ -182,7 +189,7 @@
         <div class="container">
             <header>
                 <h1>LAPORAN ABSENSI</h1>
-                <p style="color: #666; margin-top: 5px;">Status Pengerjaan Laporan Real-Time</p>
+                <p style="color: #666; margin-top: 5px;">Status Real-Time Pengerjaan</p>
             </header>
 
             <div class="list">
@@ -225,7 +232,7 @@
             </div>
 
             <div class="footer">
-                <a href="https://wa.me/6285874053845" target="_blank" class="btn-wa">💬 ORDER JOKI SEKARANG</a>
+                <a href="https://wa.me/6285874053845" target="_blank" class="btn-wa">💬 ORDER JOKI VIA WA</a>
             </div>
         </div>
     </div>
