@@ -10,8 +10,6 @@
             --primary: #8b0000;
             --secondary: #0f172a;
             --accent: #10b981;
-            --dana-blue: #008ced;
-            --bg: #ffffff;
             --radius: 15px;
         }
 
@@ -32,30 +30,77 @@
             transform: scale(0.96);
         }
 
-        /* --- HEADER KOTAK TEGAS & SLIM --- */
+        /* --- HEADER HOLOGRAM (SLIM & KOTAK) --- */
         .header-section {
-            background: var(--primary); 
+            background: var(--primary);
+            position: relative;
             padding: 55px 20px 25px;
-            text-align: center; 
-            border: none;
-            border-radius: 0; /* Tetap kotak sempurna */
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
         }
+
+        /* Efek Cahaya Bergerak */
+        .header-section::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -150%;
+            width: 50%; height: 100%;
+            background: linear-gradient(
+                to right, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            transform: skewX(-25deg);
+            animation: shine 4s infinite;
+        }
+
+        /* Garis Scanline Digital */
+        .header-section::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.05) 0px,
+                rgba(0, 0, 0, 0.05) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { left: -150%; }
+            100% { left: 150%; }
+        }
+
         .header-section h1 { 
             font-size: 18px; color: white; margin: 0; 
             letter-spacing: 2px; text-transform: uppercase; font-weight: 800;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+            position: relative; z-index: 1;
+        }
+
+        .header-section p {
+            font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 5px; 
+            letter-spacing: 1px; font-weight: 600; position: relative; z-index: 1;
         }
 
         /* --- DASHBOARD / SIDEBAR --- */
         #menu-toggle { display: none; }
         .menu-btn {
             position: fixed; left: 15px; top: 12px; z-index: 2000;
-            background: rgba(255,255,255,0.2); color: white;
+            background: rgba(255,255,255,0.15); color: white;
             padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: 800;
-            border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(8px);
         }
         .sidebar {
             position: fixed; left: -100%; top: 0; width: 80%; max-width: 280px;
-            height: 100vh; background: white; z-index: 9000; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100vh; background: white; z-index: 9000; 
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 70px 20px 20px; border-radius: 0 20px 20px 0;
             box-shadow: 10px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column;
         }
@@ -110,7 +155,7 @@
 
     <div class="header-section">
         <h1>MONITORING LAPORAN</h1>
-        <p style="font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 5px; letter-spacing: 1px;">PENGERJAAN REAL-TIME</p>
+        <p>PENGERJAAN REAL-TIME</p>
     </div>
 
     <div class="list-wrapper">
