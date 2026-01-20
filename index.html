@@ -12,7 +12,6 @@
             --accent: #10b981;
             --dana-blue: #008ced;
             --bg: #ffffff;
-            --text-main: #1e293b;
             --radius: 15px;
         }
 
@@ -21,227 +20,180 @@
         body { 
             margin: 0; 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); 
-            color: var(--text-main);
+            background: #f8fafc; 
             min-height: 100vh;
         }
 
-        /* --- ANIMASI RIPPLE & PRESS --- */
-        .sidebar-link, .btn-wa, .btn-agree, .row, .menu-label {
-            transition: transform 0.1s ease, background-color 0.2s ease, opacity 0.2s ease;
+        /* --- ANIMASI TEKAN --- */
+        .btn-main, .sidebar-link, .row, .btn-wa, .btn-submit {
+            transition: transform 0.1s ease;
+        }
+        .btn-main:active, .sidebar-link:active, .row:active, .btn-wa:active, .btn-submit:active {
+            transform: scale(0.96);
         }
 
-        /* Efek saat ditekan (Mengecil sedikit) */
-        .sidebar-link:active, .btn-wa:active, .btn-agree:active, .menu-label:active {
-            transform: scale(0.95);
-            opacity: 0.8;
+        /* --- HALAMAN LOGIN --- */
+        #auth-page { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
+        .auth-card {
+            background: white; width: 100%; max-width: 350px;
+            padding: 35px 25px; border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+        }
+        .auth-card h2 { color: var(--primary); font-weight: 800; margin-bottom: 20px; }
+        .auth-card input {
+            width: 100%; padding: 14px; margin-bottom: 12px;
+            border: 1.5px solid #eee; border-radius: 10px; font-family: inherit;
+        }
+        .btn-main {
+            width: 100%; padding: 14px; background: var(--primary);
+            color: white; border: none; border-radius: 10px; font-weight: 800;
         }
 
-        /* Efek baris nama saat ditekan */
-        .row:active {
-            background-color: #f1f5f9;
-        }
-
-        /* --- 1. MODAL PRIVASI --- */
-        #terms-toggle { display: none; }
-        .overlay-terms {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.98); z-index: 10000;
-            display: flex; justify-content: center; align-items: center;
-            backdrop-filter: blur(10px);
-        }
-        .terms-box {
-            background: white; padding: 30px; width: 90%; max-width: 400px;
-            border-radius: var(--radius); text-align: center;
-        }
-        .btn-agree {
-            display: block; background: var(--primary); color: white;
-            padding: 15px; border-radius: 10px; cursor: pointer;
-            font-weight: 800; margin-top: 20px; text-decoration: none;
-        }
-        #terms-toggle:checked ~ .overlay-terms { display: none; }
-
-        /* --- 2. DASHBOARD --- */
-        #menu-toggle { display: none; }
-        .menu-label {
-            position: fixed; left: 15px; top: 12px;
-            background: rgba(255,255,255,0.2); color: white;
-            padding: 8px 16px; border-radius: 8px;
-            cursor: pointer; z-index: 2000; font-weight: 800;
-            font-size: 12px; border: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(8px);
-        }
-        .sidebar {
-            width: 80%; max-width: 300px; background: white;
-            height: 100vh; position: fixed; left: -100%; top: 0;
-            z-index: 9000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; padding: 65px 20px 20px;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            box-shadow: 15px 0 40px rgba(0,0,0,0.1);
-        }
-        .click-outside {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.3); display: none; z-index: 8000;
-        }
-        #menu-toggle:checked ~ .sidebar { left: 0; }
-        #menu-toggle:checked ~ .click-outside { display: block; }
-
-        .sidebar h3 { color: var(--primary); font-weight: 800; margin-bottom: 25px; font-size: 18px; padding-left: 10px; }
-        .sidebar-link {
-            color: var(--secondary); text-decoration: none; padding: 14px 18px;
-            display: block; font-weight: 700; border-radius: 12px; margin-bottom: 8px; font-size: 14px;
-            background: #f8fafc;
-        }
-
-        #pay-toggle, #info-toggle { display: none; }
-        .collapsible-box { max-height: 0; overflow: hidden; transition: 0.4s ease; background: #fff; border-radius: 12px; }
-        .collapsible-content { padding: 15px; font-size: 13px; line-height: 1.6; border: 1.5px solid #f1f5f9; margin-bottom: 10px; border-radius: 12px;}
-        
-        #pay-toggle:checked ~ .pay-box, #info-toggle:checked ~ .info-box { max-height: 250px; }
-
-        .btn-wa {
-            background: var(--accent); color: white; text-align: center;
-            padding: 18px; border-radius: 15px; text-decoration: none;
-            font-weight: 800; margin-top: auto; font-size: 15px;
-            box-shadow: 0 8px 15px rgba(16, 185, 129, 0.2);
-        }
-
-        /* --- 3. KONTEN UTAMA --- */
-        .main-content { padding: 0; }
+        /* --- HALAMAN UTAMA --- */
+        #main-app { display: none; background: white; min-height: 100vh; }
 
         .header-section {
-            background: var(--primary);
-            padding: 50px 20px 25px;
-            text-align: center;
-            border: none;
+            background: var(--primary); padding: 50px 20px 25px;
+            text-align: center; border: none;
         }
-
         .header-section h1 { 
-            font-size: 18px; font-weight: 800; margin: 0; color: white;
-            letter-spacing: 2px; text-transform: uppercase;
+            font-size: 18px; color: white; margin: 0; 
+            letter-spacing: 2px; text-transform: uppercase; font-weight: 800;
         }
 
-        .header-section p { 
-            font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 6px; 
-            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        /* DASHBOARD / SIDEBAR */
+        #menu-toggle { display: none; }
+        .menu-btn {
+            position: fixed; left: 15px; top: 12px; z-index: 2000;
+            background: rgba(255,255,255,0.2); color: white;
+            padding: 8px 15px; border-radius: 8px; font-size: 12px; font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px);
+        }
+        .sidebar {
+            position: fixed; left: -100%; top: 0; width: 85%; max-width: 300px;
+            height: 100vh; background: white; z-index: 9000; transition: 0.3s;
+            padding: 70px 20px 20px; border-radius: 0 20px 20px 0;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1); overflow-y: auto;
+        }
+        #menu-toggle:checked ~ .sidebar { left: 0; }
+        .sidebar-link {
+            padding: 15px; background: #f8fafc; margin-bottom: 10px;
+            border-radius: 12px; text-decoration: none; color: var(--secondary);
+            font-weight: 700; font-size: 14px; display: block;
+        }
+
+        /* --- FITUR ULASAN --- */
+        .review-section { margin-top: 20px; padding-top: 20px; border-top: 2px solid #f1f5f9; }
+        .review-section h4 { margin-bottom: 15px; color: var(--primary); font-weight: 800; }
+        .review-form input, .review-form textarea {
+            width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px;
+            border: 1px solid #ddd; font-family: inherit; font-size: 12px;
+        }
+        .btn-submit {
+            width: 100%; padding: 10px; background: var(--secondary); color: white;
+            border: none; border-radius: 8px; font-weight: 700; font-size: 12px;
+        }
+        #review-list { margin-top: 15px; text-align: left; }
+        .review-item { 
+            background: #fff; border: 1px solid #eee; padding: 10px; 
+            border-radius: 10px; margin-bottom: 10px; font-size: 12px;
+        }
+        .review-item b { color: var(--primary); display: block; }
+
+        .btn-wa {
+            display: block; background: var(--accent); color: white;
+            padding: 16px; text-align: center; border-radius: 15px;
+            text-decoration: none; font-weight: 800; margin-top: 20px;
         }
 
         /* LIST MONITORING */
-        .list-wrapper { width: 100%; background: #fff; padding-top: 5px; }
-        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f8fafc; cursor: pointer; }
-
-        .num { font-weight: 800; color: var(--primary); width: 30px; font-size: 14px; text-align: center; }
-        .name { flex: 1; font-size: 13px; font-weight: 600; color: var(--secondary); text-transform: uppercase; padding-left: 10px;}
-
-        .badge { 
-            padding: 7px 14px; border-radius: 10px; font-size: 9px; 
-            font-weight: 800; text-transform: uppercase; min-width: 80px; text-align: center;
-        }
+        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
+        .num { font-weight: 800; color: var(--primary); width: 25px; font-size: 14px; }
+        .name { flex: 1; font-size: 13px; font-weight: 600; text-transform: uppercase; color: var(--secondary); }
+        .badge { padding: 7px 14px; border-radius: 10px; font-size: 9px; font-weight: 800; min-width: 80px; text-align: center; }
         .selesai { background: #dcfce7; color: #15803d; }
         .proses { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
 
-        @media (min-width: 1024px) {
-            .sidebar { left: 0; width: 300px; height: 100vh; top: 0; border-radius: 0; }
-            .main-content { margin-left: 300px; }
-            .menu-label, .click-outside { display: none !important; }
-        }
     </style>
 </head>
 <body>
 
-    <input type="checkbox" id="terms-toggle">
-    <div class="overlay-terms">
-        <div class="terms-box">
-            <h2 style="font-size: 16px; text-transform: uppercase;">Kebijakan Layanan</h2>
-            <div style="font-size: 12px; color: #64748b; line-height: 1.5;">
-                Dilarang menyebarkan data tanpa izin. Status pengerjaan bersifat final.
-            </div>
-            <label for="terms-toggle" class="btn-agree">SAYA MENGERTI</label>
+    <div id="auth-page">
+        <div class="auth-card">
+            <h2>LOGIN</h2>
+            <input type="text" id="user" placeholder="Username">
+            <input type="password" id="pass" placeholder="Password">
+            <button class="btn-main" onclick="masuk()">MASUK</button>
         </div>
     </div>
 
-    <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-label">☰ MENU</label>
-    <label for="menu-toggle" class="click-outside"></label>
-
-    <div class="sidebar">
-        <h3>DASHBOARD</h3>
-        <a href="#" class="sidebar-link">🏠 BERANDA</a>
+    <div id="main-app">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-btn">☰ MENU</label>
         
-        <input type="checkbox" id="pay-toggle">
-        <label for="pay-toggle" class="sidebar-link">💳 PEMBAYARAN <span style="float:right">▼</span></label>
-        <div class="collapsible-box pay-box">
-            <div class="collapsible-content">
-                HARGA JOKI: <b style="color:var(--primary)">Rp 50.000</b><br>
-                DANA: <b style="color:var(--dana-blue)">085783252407</b>
+        <div class="sidebar">
+            <a href="#" class="sidebar-link">🏠 BERANDA</a>
+            <div class="sidebar-link" style="background: #fff5f5; border: 1px solid #ffebeb;">
+                💰 JOKI: <b>50K</b><br>
+                💳 DANA: <b>085783252407</b>
             </div>
+
+            <div class="review-section">
+                <h4>⭐ BERI ULASAN</h4>
+                <div class="review-form">
+                    <input type="text" id="rev-name" placeholder="Nama Anda">
+                    <textarea id="rev-text" rows="3" placeholder="Tulis ulasan..."></textarea>
+                    <button class="btn-submit" onclick="tambahUlasan()">KIRIM ULASAN</button>
+                </div>
+                <div id="review-list">
+                    </div>
+            </div>
+
+            <a href="https://wa.me/6285874053845" class="btn-wa">CHAT ADMIN</a>
         </div>
 
-        <input type="checkbox" id="info-toggle">
-        <label for="info-toggle" class="sidebar-link">ℹ️ INFO LAYANAN <span style="float:right">▼</span></label>
-        <div class="collapsible-box info-box">
-            <div class="collapsible-content">
-                Pengerjaan dilakukan sesuai antrean yang masuk. Silahkan konfirmasi via WhatsApp.
-            </div>
-        </div>
-
-        <a href="https://wa.me/6285874053845" class="btn-wa" target="_blank">CHAT ADMIN</a>
-    </div>
-
-    <div class="main-content">
         <div class="header-section">
-            <h1>MONITORING LAPORAN</h1>
-            <p>PENGERJAAN REAL-TIME</p>
+            <h1 id="hi">MONITORING LAPORAN</h1>
+            <p style="font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 5px;">STATUS PENGERJAAN REAL-TIME</p>
         </div>
 
         <div class="list-wrapper">
-            <div class="row">
-                <div class="num">1</div>
-                <div class="name">Muhamad Fauzi Nor Alif</div>
-                <div class="badge proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="num">2</div>
-                <div class="name">Rifki Khusnul Khotim</div>
-                <div class="badge proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="num">3</div>
-                <div class="name">Apri Alpindo Anggara</div>
-                <div class="badge proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="num">4</div>
-                <div class="name">Jaenal Asikin</div>
-                <div class="badge proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="num">5</div>
-                <div class="name">Ahmad Maulana</div>
-                <div class="badge selesai">SELESAI</div>
-            </div>
-            <div class="row">
-                <div class="num">6</div>
-                <div class="name">Adia Priantono</div>
-                <div class="badge proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="num">7</div>
-                <div class="name">M. Iqbal</div>
-                <div class="badge selesai">SELESAI</div>
-            </div>
-            <div class="row">
-                <div class="num">8</div>
-                <div class="name">Natanael Dennes Christian</div>
-                <div class="badge proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="num">9</div>
-                <div class="name">Sahriadi</div>
-                <div class="badge proses">PROSES</div>
-            </div>
+            <div class="row"><div class="num">1</div><div class="name">Muhamad Fauzi Nor Alif</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">2</div><div class="name">Rifki Khusnul Khotim</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">3</div><div class="name">Apri Alpindo Anggara</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">4</div><div class="name">Ahmad Maulana</div><div class="badge selesai">SELESAI</div></div>
         </div>
     </div>
 
+    <script>
+        function masuk() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u && p) {
+                document.getElementById('auth-page').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                document.getElementById('hi').innerText = "HALLO, " + u.toUpperCase();
+            } else { alert("Isi Nama & Sandi!"); }
+        }
+
+        function tambahUlasan() {
+            const name = document.getElementById('rev-name').value;
+            const text = document.getElementById('rev-text').value;
+            const list = document.getElementById('review-list');
+
+            if(name && text) {
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                item.innerHTML = `<b>${name}</b><span>"${text}"</span>`;
+                list.prepend(item); // Tambah ke paling atas
+
+                // Bersihkan form
+                document.getElementById('rev-name').value = "";
+                document.getElementById('rev-text').value = "";
+            } else {
+                alert("Isi Nama dan Komentar!");
+            }
+        }
+    </script>
 </body>
 </html>
