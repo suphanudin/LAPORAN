@@ -3,92 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absen Laporan Profesional</title>
+    <title>Absen Laporan</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        /* DASAR & TAMPILAN DESKTOP */
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f8f9fa; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+        }
         
         .container { 
             background: white; 
             width: 100%; 
-            max-width: 1100px; /* Dibuat lebar agar mantap di desktop */
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            max-width: 1000px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
             overflow: hidden; 
         }
 
         header { 
             background: #8b0000; 
             color: white; 
-            padding: 50px 20px; 
+            padding: 40px 20px; 
             text-align: center; 
-            border-bottom: 8px solid #660000; 
         }
-        header h1 { margin: 0; font-size: 35px; letter-spacing: 2px; }
+        
+        header h1 { 
+            margin: 0; 
+            font-size: 28px; /* Ukuran pas di desktop */
+            letter-spacing: 1px; 
+        }
+        
+        header p { 
+            margin: 8px 0 0; 
+            font-size: 16px; 
+            opacity: 0.8; 
+        }
 
         .list { padding: 0; }
 
-        /* Membuat baris terlihat lebih penuh */
         .row { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            padding: 25px 40px; 
-            border-bottom: 1px solid #eee;
+            padding: 18px 30px; 
+            border-bottom: 1px solid #f0f0f0;
             transition: 0.2s;
         }
 
-        /* Warna selang-seling agar tidak kosong */
-        .row:nth-child(even) { background-color: #fff9f9; }
+        .row:nth-child(even) { background-color: #fafafa; }
         .row:hover { background-color: #f1f1f1; }
 
-        .name-wrapper { display: flex; align-items: center; gap: 15px; }
+        .name-wrapper { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            flex: 1; /* Agar nama mengambil ruang sisa */
+        }
         
-        /* Ikon user kecil di depan nama */
-        .user-icon { 
-            background: #8b0000; 
-            color: white; 
-            width: 35px; 
-            height: 35px; 
+        .user-number { 
+            background: #f0f0f0; 
+            color: #666; 
+            width: 28px; 
+            height: 28px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             border-radius: 50%; 
-            font-size: 14px; 
+            font-size: 12px; 
+            font-weight: bold;
         }
 
-        .name { font-size: 22px; font-weight: 600; color: #2c3e50; }
+        .name { 
+            font-size: 18px; /* Tidak terlalu besar, tidak terlalu kecil */
+            font-weight: 500; 
+            color: #333; 
+        }
         
         .badge { 
-            padding: 10px 25px; 
-            border-radius: 8px; 
-            font-size: 14px; 
-            font-weight: 800; 
-            min-width: 100px; 
-            text-align: center; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 6px 16px; 
+            border-radius: 6px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            text-align: center;
+            min-width: 80px;
         }
 
         .selesai { background: #8b0000; color: white; }
-        .proses { background: #ffebeb; color: #8b0000; border: 1px solid #ffcccc; }
+        .proses { background: #eeeeee; color: #777; }
 
-        .footer { padding: 50px; text-align: center; background: #fdfdfd; }
+        .footer { 
+            padding: 30px; 
+            text-align: center; 
+            background: #ffffff; 
+        }
+        
         .btn-wa { 
             display: inline-block; 
             background: #25d366; 
             color: white; 
-            padding: 20px 50px; 
-            border-radius: 50px; 
+            padding: 14px 30px; 
+            border-radius: 8px; 
             text-decoration: none; 
             font-weight: bold; 
-            font-size: 20px;
-            box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+            font-size: 16px;
         }
 
-        /* Penyesuaian untuk HP */
-        @media (max-width: 768px) {
-            .row { padding: 20px; flex-direction: column; gap: 15px; text-align: center; }
-            .name-wrapper { flex-direction: column; }
-            .name { font-size: 18px; }
+        /* PENYESUAIAN KHUSUS HP (MOBILE) */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            
+            header { padding: 30px 15px; }
+            header h1 { font-size: 20px; } /* Mengecil di HP */
+            header p { font-size: 14px; }
+
+            .row { 
+                padding: 15px; 
+                display: grid; /* Gunakan grid agar lebih rapi */
+                grid-template-columns: 1fr auto; 
+                align-items: center;
+            }
+
+            .name { font-size: 15px; } /* Ukuran teks nama lebih proporsional di HP */
+            
+            .user-number { width: 24px; height: 24px; font-size: 11px; }
+
+            .btn-wa { 
+                width: 100%; 
+                box-sizing: border-box; 
+                font-size: 15px; 
+            }
         }
     </style>
 </head>
@@ -97,13 +144,13 @@
 <div class="container">
     <header>
         <h1>ABSEN LAPORAN</h1>
-        <p>SISTEM MONITORING PENGERJAAN</p>
+        <p>Status Pengerjaan Laporan</p>
     </header>
 
     <div class="list">
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">1</div>
+                <div class="user-number">1</div>
                 <span class="name">Muhamad Fauzi Nor Alif</span>
             </div>
             <span class="badge proses">PROSES</span>
@@ -111,7 +158,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">2</div>
+                <div class="user-number">2</div>
                 <span class="name">Rifki Khusnul Khotim</span>
             </div>
             <span class="badge proses">PROSES</span>
@@ -119,7 +166,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">3</div>
+                <div class="user-number">3</div>
                 <span class="name">Apri Alpindo Anggara</span>
             </div>
             <span class="badge proses">PROSES</span>
@@ -127,7 +174,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">4</div>
+                <div class="user-number">4</div>
                 <span class="name">Jaenal Asikin</span>
             </div>
             <span class="badge proses">PROSES</span>
@@ -135,7 +182,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">5</div>
+                <div class="user-number">5</div>
                 <span class="name">Ahmad Maulana</span>
             </div>
             <span class="badge selesai">SELESAI</span>
@@ -143,7 +190,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">6</div>
+                <div class="user-number">6</div>
                 <span class="name">Adia Priantono</span>
             </div>
             <span class="badge proses">PROSES</span>
@@ -151,7 +198,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">7</div>
+                <div class="user-number">7</div>
                 <span class="name">M. Iqbal</span>
             </div>
             <span class="badge selesai">SELESAI</span>
@@ -159,7 +206,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">8</div>
+                <div class="user-number">8</div>
                 <span class="name">Natanael Dennes Christian</span>
             </div>
             <span class="badge proses">PROSES</span>
@@ -167,7 +214,7 @@
 
         <div class="row">
             <div class="name-wrapper">
-                <div class="user-icon">9</div>
+                <div class="user-number">9</div>
                 <span class="name">Sahriadi</span>
             </div>
             <span class="badge proses">PROSES</span>
