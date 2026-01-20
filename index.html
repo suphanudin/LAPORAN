@@ -15,7 +15,7 @@
             font-family: 'Segoe UI', Roboto, sans-serif; 
             background-color: #f0f2f5; 
             margin: 0; 
-            display: flex; /* Membuat sidebar dan konten bersampingan */
+            display: flex; 
         }
 
         /* SIDEBAR (MENU KIRI) */
@@ -65,7 +65,7 @@
 
         /* AREA KONTEN UTAMA */
         .main-content {
-            margin-left: 250px; /* Memberi ruang untuk sidebar */
+            margin-left: 250px; 
             flex: 1;
             padding: 40px;
             display: flex;
@@ -120,7 +120,9 @@
             background: #25d366; color: white; padding: 12px 25px; 
             border-radius: 8px; text-decoration: none; font-weight: bold;
             display: inline-block;
+            transition: 0.3s;
         }
+        .btn-wa:hover { transform: scale(1.05); background: #128c7e; }
 
         /* TAMPILAN HP (MOBILE) */
         @media (max-width: 850px) {
@@ -146,7 +148,7 @@
         <a href="#" class="active">🏠 Home</a>
         <a href="#">📊 Statistik</a>
         <a href="#">⚙️ Tools</a>
-        <a href="#">📞 Kontak</a>
+        <a href="https://wa.me/6285874053845" target="_blank">📞 Kontak</a>
     </div>
 
     <div class="main-content">
