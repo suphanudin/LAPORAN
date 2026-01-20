@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absen Laporan</title>
+    <title>Absen Laporan Animasi</title>
     <style>
-        /* DASAR & TAMPILAN DESKTOP */
+        /* DASAR & ANIMASI MUNCUL */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
             background-color: #f8f9fa; 
             margin: 0; 
             padding: 20px; 
@@ -21,7 +26,9 @@
             max-width: 1000px; 
             border-radius: 12px; 
             box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-            overflow: hidden; 
+            overflow: hidden;
+            /* Animasi container utama */
+            animation: fadeInUp 0.8s ease-out;
         }
 
         header { 
@@ -33,17 +40,9 @@
         
         header h1 { 
             margin: 0; 
-            font-size: 28px; /* Ukuran pas di desktop */
-            letter-spacing: 1px; 
+            font-size: 28px;
+            animation: fadeInUp 1s ease-out;
         }
-        
-        header p { 
-            margin: 8px 0 0; 
-            font-size: 16px; 
-            opacity: 0.8; 
-        }
-
-        .list { padding: 0; }
 
         .row { 
             display: flex; 
@@ -51,18 +50,19 @@
             align-items: center; 
             padding: 18px 30px; 
             border-bottom: 1px solid #f0f0f0;
-            transition: 0.2s;
+            transition: all 0.3s ease; /* Animasi saat disentuh */
+            cursor: pointer;
         }
 
-        .row:nth-child(even) { background-color: #fafafa; }
-        .row:hover { background-color: #f1f1f1; }
-
-        .name-wrapper { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            flex: 1; /* Agar nama mengambil ruang sisa */
+        /* Efek gerak saat baris nama disentuh/hover */
+        .row:hover { 
+            background-color: #fff5f5; 
+            transform: scale(1.02); /* Sedikit membesar */
+            padding-left: 40px; /* Bergeser sedikit ke kanan */
+            border-left: 5px solid #8b0000;
         }
+
+        .name-wrapper { display: flex; align-items: center; gap: 12px; }
         
         .user-number { 
             background: #f0f0f0; 
@@ -77,29 +77,27 @@
             font-weight: bold;
         }
 
-        .name { 
-            font-size: 18px; /* Tidak terlalu besar, tidak terlalu kecil */
-            font-weight: 500; 
-            color: #333; 
-        }
+        .name { font-size: 18px; font-weight: 500; color: #333; }
         
         .badge { 
             padding: 6px 16px; 
             border-radius: 6px; 
             font-size: 12px; 
             font-weight: bold; 
-            text-align: center;
-            min-width: 80px;
+            transition: 0.3s;
         }
 
         .selesai { background: #8b0000; color: white; }
         .proses { background: #eeeeee; color: #777; }
 
-        .footer { 
-            padding: 30px; 
-            text-align: center; 
-            background: #ffffff; 
+        /* Animasi berdenyut pada tombol WA */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
+
+        .footer { padding: 30px; text-align: center; }
         
         .btn-wa { 
             display: inline-block; 
@@ -110,32 +108,14 @@
             text-decoration: none; 
             font-weight: bold; 
             font-size: 16px;
+            animation: pulse 2s infinite; /* Tombol bergerak terus */
         }
 
-        /* PENYESUAIAN KHUSUS HP (MOBILE) */
         @media (max-width: 600px) {
-            body { padding: 10px; }
-            
-            header { padding: 30px 15px; }
-            header h1 { font-size: 20px; } /* Mengecil di HP */
-            header p { font-size: 14px; }
-
-            .row { 
-                padding: 15px; 
-                display: grid; /* Gunakan grid agar lebih rapi */
-                grid-template-columns: 1fr auto; 
-                align-items: center;
-            }
-
-            .name { font-size: 15px; } /* Ukuran teks nama lebih proporsional di HP */
-            
-            .user-number { width: 24px; height: 24px; font-size: 11px; }
-
-            .btn-wa { 
-                width: 100%; 
-                box-sizing: border-box; 
-                font-size: 15px; 
-            }
+            header h1 { font-size: 20px; }
+            .row { padding: 15px; }
+            .row:hover { transform: scale(1.01); padding-left: 20px; }
+            .name { font-size: 15px; }
         }
     </style>
 </head>
@@ -149,74 +129,39 @@
 
     <div class="list">
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">1</div>
-                <span class="name">Muhamad Fauzi Nor Alif</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">1</div><span class="name">Muhamad Fauzi Nor Alif</span></div>
             <span class="badge proses">PROSES</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">2</div>
-                <span class="name">Rifki Khusnul Khotim</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">2</div><span class="name">Rifki Khusnul Khotim</span></div>
             <span class="badge proses">PROSES</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">3</div>
-                <span class="name">Apri Alpindo Anggara</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">3</div><span class="name">Apri Alpindo Anggara</span></div>
             <span class="badge proses">PROSES</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">4</div>
-                <span class="name">Jaenal Asikin</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">4</div><span class="name">Jaenal Asikin</span></div>
             <span class="badge proses">PROSES</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">5</div>
-                <span class="name">Ahmad Maulana</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">5</div><span class="name">Ahmad Maulana</span></div>
             <span class="badge selesai">SELESAI</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">6</div>
-                <span class="name">Adia Priantono</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">6</div><span class="name">Adia Priantono</span></div>
             <span class="badge proses">PROSES</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">7</div>
-                <span class="name">M. Iqbal</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">7</div><span class="name">M. Iqbal</span></div>
             <span class="badge selesai">SELESAI</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">8</div>
-                <span class="name">Natanael Dennes Christian</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">8</div><span class="name">Natanael Dennes Christian</span></div>
             <span class="badge proses">PROSES</span>
         </div>
-
         <div class="row">
-            <div class="name-wrapper">
-                <div class="user-number">9</div>
-                <span class="name">Sahriadi</span>
-            </div>
+            <div class="name-wrapper"><div class="user-number">9</div><span class="name">Sahriadi</span></div>
             <span class="badge proses">PROSES</span>
         </div>
     </div>
