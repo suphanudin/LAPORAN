@@ -25,36 +25,19 @@
         }
 
         /* --- ANIMASI TEKAN --- */
-        .btn-main, .sidebar-link, .row, .btn-wa, .btn-submit {
+        .sidebar-link, .row, .btn-wa, .btn-submit {
             transition: transform 0.1s ease;
         }
-        .btn-main:active, .sidebar-link:active, .row:active, .btn-wa:active, .btn-submit:active {
+        .sidebar-link:active, .row:active, .btn-wa:active, .btn-submit:active {
             transform: scale(0.96);
         }
 
-        /* --- HALAMAN LOGIN --- */
-        #auth-page { display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; }
-        .auth-card {
-            background: white; width: 100%; max-width: 350px;
-            padding: 35px 25px; border-radius: var(--radius);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
-        }
-        .auth-card h2 { color: var(--primary); font-weight: 800; margin-bottom: 20px; }
-        .auth-card input {
-            width: 100%; padding: 14px; margin-bottom: 12px;
-            border: 1.5px solid #eee; border-radius: 10px; font-family: inherit;
-        }
-        .btn-main {
-            width: 100%; padding: 14px; background: var(--primary);
-            color: white; border: none; border-radius: 10px; font-weight: 800;
-        }
-
         /* --- HALAMAN UTAMA --- */
-        #main-app { display: none; background: white; min-height: 100vh; }
-
         .header-section {
-            background: var(--primary); padding: 50px 20px 25px;
-            text-align: center; border: none;
+            background: var(--primary); 
+            padding: 55px 20px 25px;
+            text-align: center; 
+            border: none;
         }
         .header-section h1 { 
             font-size: 18px; color: white; margin: 0; 
@@ -76,6 +59,14 @@
             box-shadow: 10px 0 30px rgba(0,0,0,0.1); overflow-y: auto;
         }
         #menu-toggle:checked ~ .sidebar { left: 0; }
+        
+        /* Overlay klik luar untuk tutup menu */
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); display: none; z-index: 8000;
+        }
+        #menu-toggle:checked ~ .overlay-bg { display: block; }
+
         .sidebar-link {
             padding: 15px; background: #f8fafc; margin-bottom: 10px;
             border-radius: 12px; text-decoration: none; color: var(--secondary);
@@ -84,32 +75,34 @@
 
         /* --- FITUR ULASAN --- */
         .review-section { margin-top: 20px; padding-top: 20px; border-top: 2px solid #f1f5f9; }
-        .review-section h4 { margin-bottom: 15px; color: var(--primary); font-weight: 800; }
+        .review-section h4 { margin-bottom: 15px; color: var(--primary); font-weight: 800; font-size: 14px; }
         .review-form input, .review-form textarea {
-            width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px;
-            border: 1px solid #ddd; font-family: inherit; font-size: 12px;
+            width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px;
+            border: 1px solid #ddd; font-family: inherit; font-size: 12px; outline: none;
         }
         .btn-submit {
-            width: 100%; padding: 10px; background: var(--secondary); color: white;
-            border: none; border-radius: 8px; font-weight: 700; font-size: 12px;
+            width: 100%; padding: 12px; background: var(--secondary); color: white;
+            border: none; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;
         }
         #review-list { margin-top: 15px; text-align: left; }
         .review-item { 
-            background: #fff; border: 1px solid #eee; padding: 10px; 
+            background: #fff; border: 1px solid #eee; padding: 12px; 
             border-radius: 10px; margin-bottom: 10px; font-size: 12px;
         }
-        .review-item b { color: var(--primary); display: block; }
+        .review-item b { color: var(--primary); display: block; margin-bottom: 4px; }
 
         .btn-wa {
             display: block; background: var(--accent); color: white;
             padding: 16px; text-align: center; border-radius: 15px;
-            text-decoration: none; font-weight: 800; margin-top: 20px;
+            text-decoration: none; font-weight: 800; margin-top: 20px; font-size: 14px;
         }
 
         /* LIST MONITORING */
+        .list-wrapper { width: 100%; background: white; }
         .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
         .num { font-weight: 800; color: var(--primary); width: 25px; font-size: 14px; }
-        .name { flex: 1; font-size: 13px; font-weight: 600; text-transform: uppercase; color: var(--secondary); }
+        .name { flex: 1; font-size: 13px; font-weight: 600; text-transform: uppercase; color: var(--secondary); padding-left: 5px; }
+        
         .badge { padding: 7px 14px; border-radius: 10px; font-size: 9px; font-weight: 800; min-width: 80px; text-align: center; }
         .selesai { background: #dcfce7; color: #15803d; }
         .proses { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
@@ -118,18 +111,10 @@
 </head>
 <body>
 
-    <div id="auth-page">
-        <div class="auth-card">
-            <h2>LOGIN</h2>
-            <input type="text" id="user" placeholder="Username">
-            <input type="password" id="pass" placeholder="Password">
-            <button class="btn-main" onclick="masuk()">MASUK</button>
-        </div>
-    </div>
-
     <div id="main-app">
         <input type="checkbox" id="menu-toggle">
         <label for="menu-toggle" class="menu-btn">☰ MENU</label>
+        <label for="menu-toggle" class="overlay-bg"></label>
         
         <div class="sidebar">
             <a href="#" class="sidebar-link">🏠 BERANDA</a>
@@ -153,7 +138,7 @@
         </div>
 
         <div class="header-section">
-            <h1 id="hi">MONITORING LAPORAN</h1>
+            <h1>MONITORING LAPORAN</h1>
             <p style="font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 5px;">STATUS PENGERJAAN REAL-TIME</p>
         </div>
 
@@ -161,21 +146,16 @@
             <div class="row"><div class="num">1</div><div class="name">Muhamad Fauzi Nor Alif</div><div class="badge proses">PROSES</div></div>
             <div class="row"><div class="num">2</div><div class="name">Rifki Khusnul Khotim</div><div class="badge proses">PROSES</div></div>
             <div class="row"><div class="num">3</div><div class="name">Apri Alpindo Anggara</div><div class="badge proses">PROSES</div></div>
-            <div class="row"><div class="num">4</div><div class="name">Ahmad Maulana</div><div class="badge selesai">SELESAI</div></div>
+            <div class="row"><div class="num">4</div><div class="name">Jaenal Asikin</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">5</div><div class="name">Ahmad Maulana</div><div class="badge selesai">SELESAI</div></div>
+            <div class="row"><div class="num">6</div><div class="name">Adia Priantono</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">7</div><div class="name">M. Iqbal</div><div class="badge selesai">SELESAI</div></div>
+            <div class="row"><div class="num">8</div><div class="name">Natanael Dennes Christian</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">9</div><div class="name">Sahriadi</div><div class="badge proses">PROSES</div></div>
         </div>
     </div>
 
     <script>
-        function masuk() {
-            const u = document.getElementById('user').value;
-            const p = document.getElementById('pass').value;
-            if(u && p) {
-                document.getElementById('auth-page').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                document.getElementById('hi').innerText = "HALLO, " + u.toUpperCase();
-            } else { alert("Isi Nama & Sandi!"); }
-        }
-
         function tambahUlasan() {
             const name = document.getElementById('rev-name').value;
             const text = document.getElementById('rev-text').value;
@@ -185,7 +165,7 @@
                 const item = document.createElement('div');
                 item.className = 'review-item';
                 item.innerHTML = `<b>${name}</b><span>"${text}"</span>`;
-                list.prepend(item); // Tambah ke paling atas
+                list.prepend(item); 
 
                 // Bersihkan form
                 document.getElementById('rev-name').value = "";
