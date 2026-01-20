@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absen Laporan - Fixed Mobile</title>
+    <title>Absen Laporan - Dashboard Fixed</title>
     <style>
-        /* CSS DASAR RINGAN */
+        /* --- RESET & SCROLL FIX --- */
         body { 
             font-family: sans-serif; 
             margin: 0; 
             background: #f0f2f5; 
             display: flex;
-            overflow-x: hidden;
+            /* Scroll diaktifkan kembali */
+            overflow-x: hidden; 
+            min-height: 100vh;
         }
 
-        /* 1. MODAL PERSETUJUAN */
+        /* --- 1. MODAL PERSETUJUAN --- */
         #terms-toggle { display: none; }
         .overlay-terms {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -23,7 +25,7 @@
         }
         .terms-box {
             background: white; padding: 25px; max-width: 300px;
-            border-radius: 12px; text-align: center;
+            border-radius: 12px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
         .btn-agree {
             display: inline-block; background: #8b0000; color: white;
@@ -32,35 +34,39 @@
         }
         #terms-toggle:checked ~ .overlay-terms { display: none; }
 
-        /* 2. LOGIKA SIDEBAR (DASHBOARD) */
+        /* --- 2. LOGIKA SIDEBAR (DASHBOARD) --- */
         #menu-toggle { display: none; }
         
-        .sidebar {
-            width: 280px; background: #8b0000; color: white;
-            height: 100vh; position: fixed; left: -280px; top: 0;
-            z-index: 5000; transition: 0.3s; display: flex; flex-direction: column;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.2);
-        }
-
-        /* Tombol Menu di HP */
+        /* Tombol Menu */
         .menu-label {
             position: fixed; left: 15px; top: 15px;
             background: #8b0000; color: white;
             padding: 10px 18px; border-radius: 8px;
             cursor: pointer; z-index: 1000; font-weight: bold;
-            display: block;
         }
 
-        /* Overlay Penutup saat Dashboard terbuka */
+        /* Sidebar */
+        .sidebar {
+            width: 280px; background: #8b0000; color: white;
+            height: 100vh; position: fixed; left: -280px; top: 0;
+            z-index: 5000; transition: 0.3s ease; 
+            display: flex; flex-direction: column;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+        }
+
+        /* AREA KLIK UNTUK MENUTUP (PENTING) */
         .click-outside {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); display: none; z-index: 4000;
+            position: fixed; top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.4); 
+            display: none; z-index: 4000;
+            cursor: pointer;
         }
 
-        /* Trigger Buka Menu */
+        /* Logic Toggle */
         #menu-toggle:checked ~ .sidebar { left: 0; }
         #menu-toggle:checked ~ .click-outside { display: block; }
-        #menu-toggle:checked ~ .menu-label { display: none; } /* Hilangkan tombol saat menu buka */
+        #menu-toggle:checked ~ .menu-label { opacity: 0; visibility: hidden; }
 
         .sidebar-header { padding: 25px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .sidebar a, .info-label {
@@ -72,20 +78,31 @@
         #info-toggle { display: none; }
         .info-box { 
             max-height: 0; overflow: hidden; background: rgba(0,0,0,0.3); 
-            transition: 0.3s; font-size: 13px;
+            transition: 0.3s ease; font-size: 13px;
         }
-        #info-toggle:checked ~ .info-box { max-height: 200px; }
+        #info-toggle:checked ~ .info-box { max-height: 250px; }
 
-        /* TOMBOL WA DI DASHBOARD */
+        /* TOMBOL WA */
         .btn-wa-sidebar {
             background: #25d366; color: white; text-align: center;
             padding: 15px; margin: auto 15px 20px; border-radius: 10px;
-            text-decoration: none; font-weight: bold;
+            text-decoration: none; font-weight: bold; transition: 0.3s;
         }
+        .btn-wa-sidebar:hover { background: #1ebe57; }
 
-        /* 3. KONTEN UTAMA */
-        .main-content { flex: 1; padding: 80px 15px 30px; display: flex; justify-content: center; }
-        .container { background: white; width: 100%; max-width: 800px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        /* --- 3. KONTEN UTAMA --- */
+        .main-content { 
+            flex: 1; 
+            padding: 80px 15px 40px; 
+            display: flex; 
+            justify-content: center;
+            min-height: 100vh; /* Agar konten bisa memanjang */
+        }
+        .container { 
+            background: white; width: 100%; max-width: 800px; 
+            border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            height: fit-content; /* Mengikuti jumlah data */
+        }
         header { background: #f8f9fa; padding: 25px; text-align: center; border-bottom: 1px solid #eee; }
         header h1 { margin: 0; color: #8b0000; font-size: 22px; }
 
@@ -95,9 +112,9 @@
         .selesai { background: #8b0000; color: white; }
         .proses { background: #eee; color: #777; }
 
-        /* Tampilan Desktop (Layar Lebar) */
+        /* --- DESKTOP VIEW --- */
         @media (min-width: 1024px) {
-            .sidebar { left: 0; }
+            .sidebar { left: 0; box-shadow: none; }
             .main-content { margin-left: 280px; padding-top: 40px; }
             .menu-label, .click-outside { display: none !important; }
         }
@@ -108,15 +125,17 @@
     <input type="checkbox" id="terms-toggle">
     <div class="overlay-terms">
         <div class="terms-box">
-            <h3 style="margin-top:0; color:#8b0000">Persetujuan</h3>
-            <p style="font-size: 14px; color: #666; line-height: 1.5;">Saya setuju dengan syarat & ketentuan joki laporan Rp 50.000 (Tanpa Revisi).</p>
-            <label for="terms-toggle" class="btn-agree">SETUJU & MASUK</label>
+            <h3>Persetujuan</h3>
+            <p style="font-size: 14px; color: #666;">Setuju syarat & ketentuan joki laporan Rp 50.000 (Tanpa Revisi).</p>
+            <label for="terms-toggle" class="btn-agree">SAYA SETUJU</label>
         </div>
     </div>
 
     <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-label">☰ DASHBOARD</label>
+    
     <label for="menu-toggle" class="click-outside"></label>
+    
+    <label for="menu-toggle" class="menu-label">☰ DASHBOARD</label>
 
     <div class="sidebar">
         <div class="sidebar-header"><h3>DASHBOARD</h3></div>
@@ -125,8 +144,8 @@
         <input type="checkbox" id="info-toggle">
         <label for="info-toggle" class="info-label">ℹ️ Informasi Joki <span style="float:right">▼</span></label>
         <div class="info-box">
-            <div style="padding: 15px;">
-                <strong style="color: #ffcccc;">Harga: Rp 50.000</strong><br><br>
+            <div style="padding: 15px; line-height: 1.6;">
+                <strong style="color: #ffcccc;">Harga: Rp 50.000</strong><br>
                 • Pengerjaan Cepat<br>
                 • Tanpa Revisi<br>
                 • Bayar di Awal
@@ -154,6 +173,9 @@
                 <div class="row"><span class="name">07. M. Iqbal</span><span class="badge selesai">SELESAI</span></div>
                 <div class="row"><span class="name">08. Natanael Dennes Christian</span><span class="badge proses">PROSES</span></div>
                 <div class="row"><span class="name">09. Sahriadi</span><span class="badge proses">PROSES</span></div>
+                <div class="row"><span class="name">10. Peserta Testing 1</span><span class="badge proses">PROSES</span></div>
+                <div class="row"><span class="name">11. Peserta Testing 2</span><span class="badge selesai">SELESAI</span></div>
+                <div class="row"><span class="name">12. Peserta Testing 3</span><span class="badge proses">PROSES</span></div>
             </div>
         </div>
     </div>
