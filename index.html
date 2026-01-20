@@ -3,138 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Monitoring Laporan Mobile</title>
+    <title>Sistem Monitoring Laporan</title>
     <style>
-        /* --- MOBILE OPTIMIZED CSS --- */
+        /* --- CORE PROFESSIONAL DESIGN --- */
         :root {
             --primary: #8b0000;
-            --whatsapp: #25d366;
-            --card-bg: #ffffff;
-            --body-bg: #f2f4f7;
+            --secondary: #1e293b;
+            --accent: #25d366;
+            --bg-light: #f8fafc;
+            --text-main: #334155;
         }
 
         * { 
             box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body { 
             margin: 0; 
-            background: var(--body-bg); 
-            color: #333;
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: var(--bg-light); 
+            color: var(--text-main);
             overflow-x: hidden;
-            display: block; /* Mengembalikan ke mode blok untuk scroll alami */
         }
 
-        /* --- 1. POPUP PERSETUJUAN (MOBILE FOCUS) --- */
+        /* --- 1. MODAL PERSYARATAN & PRIVASI --- */
         #terms-toggle { display: none; }
         .overlay-terms {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 10000;
+            background: rgba(15, 23, 42, 0.95); z-index: 10000;
             display: flex; justify-content: center; align-items: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
         }
         .terms-box {
-            background: white; padding: 30px; width: 85%;
-            border-radius: 20px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: white; padding: 35px 25px; width: 88%; max-width: 400px;
+            border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        .terms-box h2 { margin: 0 0 15px; color: var(--secondary); font-size: 20px; text-align: center; }
+        .terms-content { 
+            font-size: 13px; color: #64748b; text-align: left; 
+            max-height: 250px; overflow-y: auto; padding: 10px;
+            border: 1px solid #f1f5f9; border-radius: 12px; margin-bottom: 20px;
         }
         .btn-agree {
             display: block; background: var(--primary); color: white;
-            padding: 15px; border-radius: 12px; cursor: pointer;
-            font-weight: bold; margin-top: 20px;
+            padding: 16px; border-radius: 14px; cursor: pointer;
+            font-weight: bold; text-align: center; transition: 0.3s;
         }
         #terms-toggle:checked ~ .overlay-terms { display: none; }
 
-        /* --- 2. DASHBOARD MOBILE (DRAWER) --- */
+        /* --- 2. DASHBOARD & NAVIGATION --- */
         #menu-toggle { display: none; }
         
-        /* Tombol Menu di HP (Tetap di atas) */
         .menu-label {
             position: fixed; left: 15px; top: 15px;
-            background: var(--primary); color: white;
-            padding: 10px 15px; border-radius: 10px;
-            cursor: pointer; z-index: 2000; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(139,0,0,0.3);
-            font-size: 14px;
+            background: white; color: var(--primary);
+            padding: 12px 18px; border-radius: 14px;
+            cursor: pointer; z-index: 2000; font-weight: 700;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #f1f5f9;
         }
 
-        /* Sidebar Drawer */
         .sidebar {
-            width: 80%; max-width: 300px; background: var(--primary); color: white;
+            width: 80%; max-width: 300px; background: #ffffff;
             height: 100vh; position: fixed; left: -100%; top: 0;
-            z-index: 9000; transition: 0.4s cubic-bezier(0.1, 0.7, 0.1, 1);
-            display: flex; flex-direction: column; padding: 20px;
+            z-index: 9000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; padding: 30px 20px;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
         }
 
-        /* Overlay Klik Luar */
         .click-outside {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); display: none; z-index: 8000;
+            background: rgba(15, 23, 42, 0.4); display: none; z-index: 8000;
         }
 
-        /* Logic Buka Tutup */
         #menu-toggle:checked ~ .sidebar { left: 0; }
         #menu-toggle:checked ~ .click-outside { display: block; }
         #menu-toggle:checked ~ .menu-label { opacity: 0; }
 
-        .sidebar-header { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; }
+        .sidebar h3 { color: var(--primary); font-size: 18px; margin-bottom: 30px; padding-left: 10px; }
+        
         .sidebar a, .info-label {
-            color: white; text-decoration: none; padding: 15px;
-            display: block; font-size: 16px; border-radius: 10px;
+            color: var(--secondary); text-decoration: none; padding: 16px;
+            display: block; font-size: 15px; font-weight: 500; border-radius: 12px;
+            margin-bottom: 5px; transition: 0.2s;
         }
-        .sidebar a:active, .info-label:active { background: rgba(0,0,0,0.2); }
+        .sidebar a:hover, .info-label:hover { background: #f1f5f9; }
 
-        /* INFO JOKI TEKAN TAMPIL */
         #info-toggle { display: none; }
         .info-box { 
-            max-height: 0; overflow: hidden; background: rgba(0,0,0,0.2); 
-            transition: 0.3s; border-radius: 10px; font-size: 14px;
+            max-height: 0; overflow: hidden; background: #f8fafc; 
+            transition: 0.3s ease; border-radius: 12px; margin: 0 10px;
         }
-        #info-toggle:checked ~ .info-box { max-height: 200px; margin: 10px 0; }
+        .info-box p { padding: 15px; font-size: 14px; color: #64748b; line-height: 1.6; margin: 0; }
+        #info-toggle:checked ~ .info-box { max-height: 200px; margin-bottom: 15px; }
 
         .btn-wa-sidebar {
-            background: var(--whatsapp); color: white; text-align: center;
-            padding: 16px; border-radius: 15px; text-decoration: none;
-            font-weight: bold; margin-top: auto; margin-bottom: 20px;
+            background: var(--accent); color: white; text-align: center;
+            padding: 16px; border-radius: 16px; text-decoration: none;
+            font-weight: 700; margin-top: auto;
+            box-shadow: 0 10px 15px -3px rgba(37, 211, 102, 0.2);
         }
 
-        /* --- 3. TAMPILAN KONTEN UTAMA (MOBILE FIRST) --- */
-        .main-content { 
-            padding: 80px 15px 30px; 
-            min-height: 100vh;
+        /* --- 3. KONTEN UTAMA --- */
+        .main-content { padding: 90px 20px 40px; min-height: 100vh; }
+
+        .header-title { text-align: center; margin-bottom: 30px; }
+        .header-title h1 { font-size: 22px; color: var(--secondary); letter-spacing: -0.5px; }
+
+        .list-container {
+            background: white; border-radius: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .header-title { text-align: center; margin-bottom: 20px; }
-        .header-title h1 { font-size: 22px; color: var(--primary); margin: 0; }
-        .header-title p { font-size: 13px; color: #777; margin: 5px 0; }
-
-        .container-list {
-            background: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-            overflow: hidden;
+        .empty-state {
+            padding: 40px 20px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 14px;
         }
 
-        .row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; border-bottom: 1px solid #f8f9fa;
-        }
-        .name { font-size: 14px; color: #333; font-weight: 500; flex: 1; padding-right: 10px; }
-
-        /* Badge Status */
-        .badge {
-            padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: bold;
-            white-space: nowrap;
-        }
-        .status-selesai { background: #e6fffa; color: #2c7a7b; border: 1px solid #b2f5ea; }
-        .status-proses { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
-
-        /* Desktop View (Opsional untuk tetap rapi di PC) */
+        /* --- DESKTOP --- */
         @media (min-width: 1024px) {
-            .sidebar { left: 0; width: 300px; }
-            .main-content { margin-left: 300px; padding: 40px; }
+            .sidebar { left: 0; box-shadow: none; border-right: 1px solid #e2e8f0; width: 300px; }
+            .main-content { margin-left: 300px; }
             .menu-label, .click-outside { display: none !important; }
         }
     </style>
@@ -144,9 +141,14 @@
     <input type="checkbox" id="terms-toggle">
     <div class="overlay-terms">
         <div class="terms-box">
-            <h3 style="margin-top:0">Ketentuan Joki</h3>
-            <p style="font-size: 14px; color: #555;">Tarif flat <b>Rp 50.000</b> per laporan. Pengerjaan cepat & Tanpa Revisi.</p>
-            <label for="terms-toggle" class="btn-agree">SAYA SETUJU</label>
+            <h2>Syarat & Kebijakan Privasi</h2>
+            <div class="terms-content">
+                <p><b>1. Layanan:</b> Website ini berfungsi sebagai media monitoring status pengerjaan secara real-time.</p>
+                <p><b>2. Kebijakan Privasi:</b> Kami menjaga kerahasiaan data identitas peserta yang tertera dalam daftar monitoring.</p>
+                <p><b>3. Ketentuan Pengerjaan:</b> Seluruh layanan yang telah diproses dianggap final dan tidak dapat dibatalkan secara sepihak.</p>
+                <p><b>4. Kewajiban Pengguna:</b> Pengguna diharapkan memeriksa status secara berkala melalui Dashboard resmi ini.</p>
+            </div>
+            <label for="terms-toggle" class="btn-agree">SAYA SETUJU & LANJUTKAN</label>
         </div>
     </div>
 
@@ -155,80 +157,31 @@
     <label for="menu-toggle" class="click-outside"></label>
 
     <div class="sidebar">
-        <div class="sidebar-header">
-            <h2 style="margin:0; font-size:18px;">DASHBOARD</h2>
-        </div>
-        
-        <a href="#">🏠 Home</a>
+        <h3>Menu Utama</h3>
+        <a href="#">🏠 Beranda</a>
         
         <input type="checkbox" id="info-toggle">
-        <label for="info-toggle" class="info-label">ℹ️ Informasi Joki <span style="float:right">▼</span></label>
+        <label for="info-toggle" class="info-label">ℹ️ Informasi Layanan <span style="float:right">▼</span></label>
         <div class="info-box">
-            <div style="padding: 15px; border-left: 3px solid #ffcccc;">
-                <b>Harga: Rp 50.000</b><br><br>
-                - Pengerjaan Cepat<br>
-                - Tanpa Revisi<br>
-                - Langsung Jadi
-            </div>
+            <p>
+                <b>Biaya Layanan:</b> Rp 50.000<br>
+                <b>Ketentuan:</b> Pengerjaan sesuai format, durasi cepat, dan bersifat final (Tanpa Revisi).
+            </p>
         </div>
 
         <a href="#">📊 Statistik</a>
-        
-        <a href="https://wa.me/6285874053845" class="btn-wa-sidebar" target="_blank">
-            💬 CHAT ADMIN SEKARANG
-        </a>
+        <a href="https://wa.me/6285874053845" class="btn-wa-sidebar" target="_blank">Hubungi Administrasi</a>
     </div>
 
     <div class="main-content">
         <div class="header-title">
-            <h1>MONITORING ABSEN</h1>
-            <p>Update pengerjaan laporan harian</p>
+            <h1>Monitoring Laporan</h1>
+            <p style="font-size: 13px; color: #94a3b8; margin: 5px 0 0;">Status Pengerjaan Real-Time</p>
         </div>
 
-        <div class="container-list">
-            <div class="row">
-                <div class="name">01. Muhamad Fauzi Nor Alif</div>
-                <div class="badge status-proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="name">02. Rifki Khusnul Khotim</div>
-                <div class="badge status-proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="name">03. Apri Alpindo Anggara</div>
-                <div class="badge status-proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="name">04. Jaenal Asikin</div>
-                <div class="badge status-proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="name">05. Ahmad Maulana</div>
-                <div class="badge status-selesai">SELESAI</div>
-            </div>
-            <div class="row">
-                <div class="name">06. Adia Priantono</div>
-                <div class="badge status-proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="name">07. M. Iqbal</div>
-                <div class="badge status-selesai">SELESAI</div>
-            </div>
-            <div class="row">
-                <div class="name">08. Natanael Dennes Christian</div>
-                <div class="badge status-proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="name">09. Sahriadi</div>
-                <div class="badge status-proses">PROSES</div>
-            </div>
-            <div class="row">
-                <div class="name">10. Contoh Nama Lain 1</div>
-                <div class="badge status-selesai">SELESAI</div>
-            </div>
-            <div class="row">
-                <div class="name">11. Contoh Nama Lain 2</div>
-                <div class="badge status-proses">PROSES</div>
+        <div class="list-container">
+            <div class="empty-state">
+                <p>Belum ada data laporan yang diproses.</p>
             </div>
         </div>
     </div>
