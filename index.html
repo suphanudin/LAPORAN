@@ -3,201 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absen Laporan Profesional</title>
+    <title>Absen Laporan Sidebar</title>
     <style>
-        /* ANIMASI UTAMA */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ANIMASI */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         body { 
             font-family: 'Segoe UI', Roboto, sans-serif; 
-            background-color: #f8f9fa; 
+            background-color: #f0f2f5; 
             margin: 0; 
-            padding: 0; 
+            display: flex; /* Membuat sidebar dan konten bersampingan */
         }
 
-        /* NAVIGATION BAR (MENU) */
-        nav {
-            background: #ffffff;
+        /* SIDEBAR (MENU KIRI) */
+        .sidebar {
+            width: 250px;
+            background: #8b0000;
+            color: white;
+            height: 100vh;
+            position: fixed;
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            flex-direction: column;
+            padding: 20px 0;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
         }
 
-        nav a {
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar-header h2 { font-size: 18px; margin: 0; letter-spacing: 2px; }
+
+        .sidebar a {
             text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            padding: 8px 15px;
-            border-radius: 5px;
+            color: rgba(255,255,255,0.8);
+            padding: 15px 25px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
             transition: 0.3s;
         }
 
-        nav a:hover {
-            background: #8b0000;
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.1);
             color: white;
+            padding-left: 35px;
         }
 
-        nav a.active {
-            border-bottom: 3px solid #8b0000;
+        .sidebar a.active {
+            background: #ffffff;
             color: #8b0000;
+            font-weight: bold;
         }
 
-        /* CONTAINER */
-        .page-wrapper {
-            padding: 20px;
+        /* AREA KONTEN UTAMA */
+        .main-content {
+            margin-left: 250px; /* Memberi ruang untuk sidebar */
+            flex: 1;
+            padding: 40px;
             display: flex;
             justify-content: center;
+            animation: fadeIn 1s ease-in;
         }
 
         .container { 
             background: white; 
             width: 100%; 
-            max-width: 1000px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-            overflow: hidden;
-            animation: fadeInUp 0.8s ease-out;
+            max-width: 900px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05); 
+            overflow: hidden; 
         }
 
         header { 
-            background: #8b0000; 
-            color: white; 
-            padding: 40px 20px; 
-            text-align: center; 
+            background: #f8f9fa; 
+            padding: 30px; 
+            border-bottom: 2px solid #eee;
+            text-align: center;
         }
         
-        header h1 { margin: 0; font-size: 28px; }
+        header h1 { margin: 0; color: #8b0000; font-size: 24px; }
 
         /* LIST & ROWS */
-        .list { padding: 0; }
-
         .row { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            padding: 18px 30px; 
-            border-bottom: 1px solid #f0f0f0;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .row:hover { 
-            background-color: #fff5f5; 
-            transform: scale(1.01);
-            padding-left: 35px;
-            border-left: 5px solid #8b0000;
-        }
-
-        .name-wrapper { display: flex; align-items: center; gap: 12px; }
-        .user-number { 
-            background: #f0f0f0; color: #666; width: 28px; height: 28px; 
-            display: flex; align-items: center; justify-content: center; 
-            border-radius: 50%; font-size: 12px; font-weight: bold;
-        }
-
-        .name { font-size: 17px; font-weight: 500; color: #333; }
-        
-        .badge { 
-            padding: 6px 16px; border-radius: 6px; 
-            font-size: 12px; font-weight: bold; 
-        }
-
-        .selesai { background: #8b0000; color: white; }
-        .proses { background: #eeeeee; color: #777; }
-
-        /* FOOTER & BUTTON */
-        .footer { padding: 30px; text-align: center; }
-        
-        .btn-wa { 
-            display: inline-block; 
-            background: #25d366; 
-            color: white; 
-            padding: 14px 30px; 
-            border-radius: 8px; 
-            text-decoration: none; 
-            font-weight: bold; 
-            box-shadow: 0 4px 10px rgba(37,211,102,0.2);
+            padding: 20px 30px; 
+            border-bottom: 1px solid #f1f1f1;
             transition: 0.3s;
         }
 
-        .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(37,211,102,0.3); }
+        .row:hover { background: #fffcfc; }
 
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            header h1 { font-size: 20px; }
+        .name-wrapper { display: flex; align-items: center; gap: 15px; }
+        .user-number { font-size: 14px; color: #999; font-weight: bold; }
+        .name { font-size: 16px; font-weight: 500; color: #333; }
+        
+        .badge { 
+            padding: 6px 14px; border-radius: 4px; 
+            font-size: 11px; font-weight: bold; 
+        }
+
+        .selesai { background: #8b0000; color: white; }
+        .proses { background: #f0f0f0; color: #888; }
+
+        .footer { padding: 30px; text-align: center; }
+        .btn-wa { 
+            background: #25d366; color: white; padding: 12px 25px; 
+            border-radius: 8px; text-decoration: none; font-weight: bold;
+            display: inline-block;
+        }
+
+        /* TAMPILAN HP (MOBILE) */
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            .sidebar { 
+                width: 100%; height: auto; position: relative; 
+                flex-direction: row; justify-content: center; padding: 10px 0;
+            }
+            .sidebar-header { display: none; }
+            .sidebar a { padding: 10px; font-size: 12px; flex-direction: column; gap: 5px; }
+            .sidebar a:hover { padding-left: 10px; }
+            .main-content { margin-left: 0; padding: 15px; }
             .row { padding: 15px; }
-            .name { font-size: 14px; }
-            nav a { font-size: 12px; padding: 5px 10px; }
         }
     </style>
 </head>
 <body>
 
-    <nav>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>MENU UTAMA</h2>
+        </div>
         <a href="#" class="active">🏠 Home</a>
         <a href="#">📊 Statistik</a>
-        <a href="#">📞 Kontak</a>
         <a href="#">⚙️ Tools</a>
-    </nav>
+        <a href="#">📞 Kontak</a>
+    </div>
 
-    <div class="page-wrapper">
+    <div class="main-content">
         <div class="container">
             <header>
-                <h1>ABSEN LAPORAN</h1>
-                <p>Monitoring Status Real-Time</p>
+                <h1>LAPORAN ABSENSI</h1>
+                <p style="color: #666; margin-top: 5px;">Status Pengerjaan Laporan Peserta</p>
             </header>
 
             <div class="list">
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">1</div><span class="name">Muhamad Fauzi Nor Alif</span></div>
+                    <div class="name-wrapper"><div class="user-number">01</div><span class="name">Muhamad Fauzi Nor Alif</span></div>
                     <span class="badge proses">PROSES</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">2</div><span class="name">Rifki Khusnul Khotim</span></div>
+                    <div class="name-wrapper"><div class="user-number">02</div><span class="name">Rifki Khusnul Khotim</span></div>
                     <span class="badge proses">PROSES</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">3</div><span class="name">Apri Alpindo Anggara</span></div>
+                    <div class="name-wrapper"><div class="user-number">03</div><span class="name">Apri Alpindo Anggara</span></div>
                     <span class="badge proses">PROSES</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">4</div><span class="name">Jaenal Asikin</span></div>
+                    <div class="name-wrapper"><div class="user-number">04</div><span class="name">Jaenal Asikin</span></div>
                     <span class="badge proses">PROSES</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">5</div><span class="name">Ahmad Maulana</span></div>
+                    <div class="name-wrapper"><div class="user-number">05</div><span class="name">Ahmad Maulana</span></div>
                     <span class="badge selesai">SELESAI</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">6</div><span class="name">Adia Priantono</span></div>
+                    <div class="name-wrapper"><div class="user-number">06</div><span class="name">Adia Priantono</span></div>
                     <span class="badge proses">PROSES</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">7</div><span class="name">M. Iqbal</span></div>
+                    <div class="name-wrapper"><div class="user-number">07</div><span class="name">M. Iqbal</span></div>
                     <span class="badge selesai">SELESAI</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">8</div><span class="name">Natanael Dennes Christian</span></div>
+                    <div class="name-wrapper"><div class="user-number">08</div><span class="name">Natanael Dennes Christian</span></div>
                     <span class="badge proses">PROSES</span>
                 </div>
                 <div class="row">
-                    <div class="name-wrapper"><div class="user-number">9</div><span class="name">Sahriadi</span></div>
+                    <div class="name-wrapper"><div class="user-number">09</div><span class="name">Sahriadi</span></div>
                     <span class="badge proses">PROSES</span>
                 </div>
             </div>
 
             <div class="footer">
-                <a href="https://wa.me/6285874053845" target="_blank" class="btn-wa">💬 CHAT WHATSAPP</a>
+                <a href="https://wa.me/6285874053845" target="_blank" class="btn-wa">💬 HUBUNGI ADMIN</a>
             </div>
         </div>
     </div>
