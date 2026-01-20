@@ -3,187 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absen Laporan Profesional</title>
+    <title>Sistem Monitoring Laporan - Dashboard</title>
     <style>
-        /* DASAR */
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            background-color: #f0f2f5; 
-            margin: 0; 
-            display: flex;
-            overflow-x: hidden;
+        /* --- RESET & DASAR --- */
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            overflow: hidden; /* Mencegah scroll body utama agar layout tetap full */
         }
 
-        /* SISTEM SYARAT & KETENTUAN (MODAL) */
-        #terms-toggle { display: none; }
-        .terms-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 3000;
-            display: flex; justify-content: center; align-items: center;
+        /* --- ANIMASI CSS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        .terms-box {
-            background: white; padding: 30px; max-width: 350px;
-            border-radius: 15px; text-align: center;
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* --- 1. POPUP PERSETUJUAN (CSS MODAL) --- */
+        #terms-control { display: none; }
+        .overlay-terms {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+        .modal-box {
+            background: white;
+            padding: 2.5rem;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
         .btn-agree {
-            display: inline-block; background: #8b0000; color: white;
-            padding: 12px 40px; border-radius: 8px; cursor: pointer;
-            font-weight: bold; margin-top: 20px;
-        }
-        #terms-toggle:checked ~ .terms-overlay { display: none; }
-
-        /* LOGIKA DASHBOARD (SIDEBAR) */
-        #menu-toggle { display: none; }
-        
-        /* Tombol Menu Utama */
-        .menu-label {
-            position: fixed; left: 20px; top: 20px;
-            background: #8b0000; color: white;
-            padding: 10px 20px; border-radius: 8px;
-            cursor: pointer; z-index: 100; font-weight: bold;
-        }
-
-        /* Overlay untuk klik di mana saja untuk menutup */
-        .click-outside {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.2); opacity: 0; visibility: hidden;
-            z-index: 400; transition: 0.3s;
-        }
-
-        .sidebar {
-            width: 280px; background: #8b0000; color: white;
-            height: 100vh; position: fixed; left: -280px; top: 0;
-            z-index: 500; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
-        }
-
-        /* SAAT DASHBOARD TERBUKA */
-        #menu-toggle:checked ~ .sidebar { left: 0; }
-        #menu-toggle:checked ~ .menu-label { display: none; } /* Hilangkan tombol saat buka */
-        #menu-toggle:checked ~ .click-outside { opacity: 1; visibility: visible; }
-
-        .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .sidebar-header h2 { margin: 0; font-size: 20px; letter-spacing: 2px; }
-
-        .sidebar a {
-            text-decoration: none; color: rgba(255,255,255,0.8);
-            padding: 15px 25px; display: block; transition: 0.3s;
-        }
-        .sidebar a:hover { background: rgba(255,255,255,0.1); color: white; }
-
-        /* FITUR INFORMASI JOKI (TEKAN UNTUK TAMPIL) */
-        #info-joki-toggle { display: none; }
-        .info-btn {
-            background: rgba(0,0,0,0.2); margin: 10px 20px;
-            padding: 12px; border-radius: 8px; cursor: pointer;
-            text-align: center; border: 1px solid rgba(255,255,255,0.2);
-            display: block; font-weight: bold;
-        }
-        .info-details {
-            max-height: 0; overflow: hidden; transition: 0.5s;
-            background: rgba(255,255,255,0.1); margin: 0 20px; border-radius: 0 0 8px 8px;
-        }
-        .info-details p { padding: 15px; margin: 0; font-size: 13px; line-height: 1.6; }
-        
-        /* Logika tekan munculkan info */
-        #info-joki-toggle:checked ~ .info-details { max-height: 200px; margin-bottom: 15px; }
-
-        /* KONTEN UTAMA */
-        .main-content {
-            flex: 1; padding: 100px 20px 40px;
-            display: flex; justify-content: center;
-        }
-
-        .container { 
-            background: white; width: 100%; max-width: 800px; 
-            border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); overflow: hidden; 
-        }
-
-        header { background: #f8f9fa; padding: 30px; text-align: center; border-bottom: 2px solid #eee; }
-        header h1 { margin: 0; color: #8b0000; font-size: 24px; }
-
-        .row { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 18px 30px; border-bottom: 1px solid #f1f1f1; 
-        }
-        .name { font-size: 16px; font-weight: 500; color: #333; }
-        .badge { padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-        .selesai { background: #8b0000; color: white; }
-        .proses { background: #f0f0f0; color: #888; }
-
-        .footer { padding: 30px; text-align: center; }
-        .btn-wa { 
-            background: #25d366; color: white; padding: 12px 25px; 
-            border-radius: 8px; text-decoration: none; font-weight: bold;
             display: inline-block;
+            background: #8b0000;
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: 0.3s;
+        }
+        .btn-agree:hover { background: #b30000; transform: translateY(-2px); }
+        #terms-control:checked ~ .overlay-terms { display: none; }
+
+        /* --- 2. LAYOUT UTAMA --- */
+        .wrapper {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            animation: fadeIn 1s ease;
+        }
+
+        /* --- 3. SIDEBAR (DASHBOARD) --- */
+        #menu-toggle { display: none; }
+        .sidebar {
+            width: 320px;
+            background: #8b0000;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+            z-index: 1000;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .nav-menu { flex: 1; }
+        .nav-item {
+            text-decoration: none;
+            color: rgba(255,255,255,0.8);
+            padding: 1rem 1.5rem;
+            display: block;
+            border-radius: 0.8rem;
+            margin-bottom: 0.5rem;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.1); color: white; }
+        .nav-item.active { background: white; color: #8b0000; }
+
+        /* FITUR INFO JOKI (TEKAN TAMPIL) */
+        #info-control { display: none; }
+        .info-label {
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            border-radius: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .info-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: rgba(255,255,255,0.05);
+            border-radius: 0 0 0.8rem 0.8rem;
+            font-size: 0.9rem;
+        }
+        .info-box p { padding: 1rem; margin: 0; line-height: 1.6; }
+        #info-control:checked ~ .info-box { max-height: 200px; margin-bottom: 1rem; }
+
+        /* TOMBOL CHAT ADMIN (DIPINDAHKAN KE DASHBOARD) */
+        .btn-chat {
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+            margin-top: auto; /* Memposisikan ke bawah dashboard */
+        }
+        .btn-chat:hover { background: #1ebe57; transform: scale(1.05); }
+
+        /* --- 4. AREA KONTEN UTAMA --- */
+        .main-container {
+            flex: 1;
+            height: 100vh;
+            overflow-y: auto; /* Hanya area ini yang bisa di-scroll */
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-content {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideUp 0.8s ease;
+        }
+        .header-content h1 { color: #8b0000; font-size: 2.5rem; margin: 0; }
+        .header-content p { color: #666; margin-top: 0.5rem; }
+
+        .table-card {
+            background: white;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            overflow: hidden;
+            animation: slideUp 1s ease;
+        }
+
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: 0.2s;
+        }
+        .table-row:hover { background: #fffafb; }
+        .table-row:last-child { border-bottom: none; }
+
+        .name-tag { font-weight: 600; color: #333; display: flex; align-items: center; gap: 15px; }
+        .num { color: #ccc; font-size: 0.9rem; }
+
+        .status {
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .status.proses { background: #fef1f1; color: #8b0000; }
+        .status.selesai { background: #8b0000; color: white; }
+
+        /* --- 5. LOGIKA TOGGLE MENU (TUTUP DI SEMBARANG TEMPAT) --- */
+        .menu-btn {
+            position: fixed;
+            top: 20px; left: 20px;
+            background: #8b0000;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.8rem;
+            cursor: pointer;
+            z-index: 900;
+            font-weight: bold;
+            display: none; /* Sembunyi di desktop */
+        }
+
+        .close-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.3);
+            z-index: 950;
+            display: none;
+        }
+
+        /* RESPONSIVE LOGIC */
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                transform: translateX(-100%);
+            }
+            .main-container { margin-left: 0; padding: 5rem 1.5rem 2rem; }
+            .menu-btn { display: block; }
+
+            #menu-toggle:checked ~ .sidebar { transform: translateX(0); }
+            #menu-toggle:checked ~ .close-overlay { display: block; }
+            #menu-toggle:checked ~ .menu-btn { display: none; } /* Hilangkan tombol saat menu terbuka */
+        }
+
+        @media (max-width: 600px) {
+            .header-content h1 { font-size: 1.8rem; }
+            .table-row { padding: 1rem; flex-direction: column; gap: 10px; text-align: center; }
+            .sidebar { width: 85%; }
         }
     </style>
 </head>
 <body>
 
-    <input type="checkbox" id="terms-toggle">
-    <div class="terms-overlay">
-        <div class="terms-box">
-            <h2 style="color:#8b0000">Persetujuan</h2>
-            <p>Saya setuju dengan syarat & ketentuan yang berlaku di website ini.</p>
-            <label for="terms-toggle" class="btn-agree">SETUJU & MASUK</label>
+    <input type="checkbox" id="terms-control">
+    <div class="overlay-terms">
+        <div class="modal-box">
+            <h2>Syarat & Ketentuan</h2>
+            <p>Dengan memasuki dashboard ini, Anda menyetujui sistem pengerjaan laporan kami tanpa revisi dengan tarif flat Rp 50.000.</p>
+            <label for="terms-control" class="btn-agree">SETUJU & LANJUTKAN</label>
         </div>
     </div>
 
     <input type="checkbox" id="menu-toggle">
-    
-    <label for="menu-toggle" class="menu-label">☰ DASHBOARD</label>
+    <label for="menu-toggle" class="menu-btn">☰ DASHBOARD</label>
+    <label for="menu-toggle" class="close-overlay"></label>
 
-    <label for="menu-toggle" class="click-outside"></label>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>MENU UTAMA</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">🏠 Beranda</a>
+                
+                <input type="checkbox" id="info-control">
+                <label for="info-control" class="info-label">
+                    <span>ℹ️ Informasi Joki</span>
+                    <span>▼</span>
+                </label>
+                <div class="info-box">
+                    <p>
+                        <strong>Harga Joki: Rp 50.000</strong><br><br>
+                        • Pengerjaan Super Cepat<br>
+                        • Tanpa Revisi (Final)<br>
+                        • Bayar diawal via Dana/QRIS
+                    </p>
+                </div>
 
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>DASHBOARD</h2>
-        </div>
-        <a href="#">🏠 Beranda</a>
-        
-        <input type="checkbox" id="info-joki-toggle">
-        <label for="info-joki-toggle" class="info-btn">ℹ️ Informasi Joki</label>
-        <div class="info-details">
-            <p>
-                <strong>Harga: Rp 50.000</strong><br>
-                Ketentuan:<br>
-                - Pengerjaan Cepat<br>
-                - Tanpa Revisi<br>
-                - Pembayaran di Awal
-            </p>
-        </div>
+                <a href="#" class="nav-item">📊 Statistik Laporan</a>
+                <a href="#" class="nav-item">⚙️ Pengaturan</a>
+            </nav>
 
-        <a href="#">📊 Statistik</a>
-        <a href="https://wa.me/6285874053845" target="_blank">📞 Hubungi Admin</a>
-    </div>
+            <a href="https://wa.me/6285874053845" class="btn-chat" target="_blank">
+                <span>💬 CHAT ADMIN SEKARANG</span>
+            </a>
+        </aside>
 
-    <div class="main-content">
-        <div class="container">
-            <header>
-                <h1>LAPORAN ABSENSI</h1>
-                <p style="color: #666; margin-top: 5px;">Status Pengerjaan Laporan Peserta</p>
-            </header>
-
-            <div class="list">
-                <div class="row"><span class="name">01. Muhamad Fauzi Nor Alif</span><span class="badge proses">PROSES</span></div>
-                <div class="row"><span class="name">02. Rifki Khusnul Khotim</span><span class="badge proses">PROSES</span></div>
-                <div class="row"><span class="name">03. Apri Alpindo Anggara</span><span class="badge proses">PROSES</span></div>
-                <div class="row"><span class="name">04. Jaenal Asikin</span><span class="badge proses">PROSES</span></div>
-                <div class="row"><span class="name">05. Ahmad Maulana</span><span class="badge selesai">SELESAI</span></div>
-                <div class="row"><span class="name">06. Adia Priantono</span><span class="badge proses">PROSES</span></div>
-                <div class="row"><span class="name">07. M. Iqbal</span><span class="badge selesai">SELESAI</span></div>
-                <div class="row"><span class="name">08. Natanael Dennes Christian</span><span class="badge proses">PROSES</span></div>
-                <div class="row"><span class="name">09. Sahriadi</span><span class="badge proses">PROSES</span></div>
+        <main class="main-container">
+            <div class="header-content">
+                <h1>MONITORING LAPORAN</h1>
+                <p>Pantau status pengerjaan laporan Anda secara real-time</p>
             </div>
 
-            <div class="footer">
-                <a href="https://wa.me/6285874053845" target="_blank" class="btn-wa">💬 CHAT ADMIN SEKARANG</a>
+            <div class="table-card">
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">01</span> Muhamad Fauzi Nor Alif</div>
+                    <div class="status proses">Dalam Proses</div>
+                </div>
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">02</span> Rifki Khusnul Khotim</div>
+                    <div class="status proses">Dalam Proses</div>
+                </div>
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">03</span> Apri Alpindo Anggara</div>
+                    <div class="status proses">Dalam Proses</div>
+                </div>
+                <div class="row table-row">
+                    <div class="name-tag"><span class="num">04</span> Jaenal Asikin</div>
+                    <div class="status proses">Dalam Proses</div>
+                </div>
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">05</span> Ahmad Maulana</div>
+                    <div class="status selesai">Selesai</div>
+                </div>
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">06</span> Adia Priantono</div>
+                    <div class="status proses">Dalam Proses</div>
+                </div>
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">07</span> M. Iqbal</div>
+                    <div class="status selesai">Selesai</div>
+                </div>
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">08</span> Natanael Dennes Christian</div>
+                    <div class="status proses">Dalam Proses</div>
+                </div>
+                <div class="table-row">
+                    <div class="name-tag"><span class="num">09</span> Sahriadi</div>
+                    <div class="status proses">Dalam Proses</div>
+                </div>
             </div>
-        </div>
+        </main>
     </div>
 
 </body>
