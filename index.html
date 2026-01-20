@@ -13,6 +13,7 @@
             --dana-blue: #008ced;
             --bg: #ffffff;
             --text-main: #1e293b;
+            --radius: 20px; /* Variabel untuk lengkungan */
         }
 
         * { 
@@ -28,7 +29,7 @@
             min-height: 100vh;
         }
 
-        /* --- 1. MODAL PRIVASI --- */
+        /* --- 1. MODAL PRIVASI (LENGKUNG) --- */
         #terms-toggle { display: none; }
         .overlay-terms {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -38,30 +39,32 @@
         }
         .terms-box {
             background: white; padding: 40px 30px; width: 90%; max-width: 400px;
-            border-radius: 0; /* BOX TEGAS */
+            border-radius: var(--radius); 
             text-align: center;
         }
         .btn-agree {
             display: block; background: var(--primary); color: white;
-            padding: 18px; border-radius: 0; cursor: pointer;
+            padding: 18px; border-radius: 12px; cursor: pointer;
             font-weight: 800; margin-top: 25px;
         }
         #terms-toggle:checked ~ .overlay-terms { display: none; }
 
-        /* --- 2. DASHBOARD (DRAWER) --- */
+        /* --- 2. DASHBOARD (DRAWER LENGKUNG) --- */
         #menu-toggle { display: none; }
         .menu-label {
-            position: fixed; left: 0; top: 20px;
+            position: fixed; left: 20px; top: 20px;
             background: var(--primary); color: white;
-            padding: 12px 20px; border-radius: 0 8px 8px 0;
+            padding: 12px 20px; border-radius: 12px;
             cursor: pointer; z-index: 2000; font-weight: 800;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .sidebar {
             width: 80%; max-width: 320px; background: white;
-            height: 100vh; position: fixed; left: -100%; top: 0;
-            z-index: 9000; transition: 0.4s;
+            height: 96vh; position: fixed; left: -100%; top: 2vh;
+            z-index: 9000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; padding: 40px 20px;
+            border-radius: 0 var(--radius) var(--radius) 0; /* Lengkung di kanan */
+            box-shadow: 20px 0 50px rgba(0,0,0,0.1);
         }
         .click-outside {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -70,84 +73,70 @@
         #menu-toggle:checked ~ .sidebar { left: 0; }
         #menu-toggle:checked ~ .click-outside { display: block; }
 
-        .sidebar h3 { color: var(--primary); font-weight: 800; margin-bottom: 20px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .sidebar h3 { color: var(--primary); font-weight: 800; margin-bottom: 20px; }
         .sidebar-link {
             color: var(--secondary); text-decoration: none; padding: 16px;
-            display: block; font-weight: 700; border-bottom: 1px solid #eee;
+            display: block; font-weight: 700; border-radius: 12px; margin-bottom: 5px;
         }
+        .sidebar-link:active { background: #f1f5f9; }
 
-        /* --- COLLAPSIBLE BOXES --- */
+        /* --- COLLAPSIBLE BOXES (LENGKUNG) --- */
         #info-toggle, #pay-toggle { display: none; }
-        .collapsible-box { max-height: 0; overflow: hidden; transition: 0.4s ease; background: #f8fafc; }
-        .collapsible-content { padding: 20px; font-size: 14px; border: 1px solid #eee; }
-        #info-toggle:checked ~ .info-box, #pay-toggle:checked ~ .pay-box { max-height: 300px; margin-bottom: 15px; }
+        .collapsible-box { max-height: 0; overflow: hidden; transition: 0.4s ease; background: #f8fafc; border-radius: 12px; }
+        .collapsible-content { padding: 20px; font-size: 14px; border-radius: 12px; }
+        #info-toggle:checked ~ .info-box, #pay-toggle:checked ~ .pay-box { max-height: 300px; margin-bottom: 15px; border: 1px solid #eee; }
 
         .btn-wa {
             background: var(--accent); color: white; text-align: center;
-            padding: 18px; text-decoration: none; font-weight: 800; margin-top: auto;
+            padding: 18px; border-radius: 15px; text-decoration: none;
+            font-weight: 800; margin-top: auto;
         }
 
-        /* --- 3. KONTEN UTAMA DENGAN HEADER KOTAK TEGAS --- */
+        /* --- 3. KONTEN UTAMA --- */
         .main-content { padding: 0; }
 
-        /* KOLOM JUDUL (HEADER) - SEKARANG KOTAK TANPA LENGKUNGAN */
+        /* HEADER KOTAK TEGAS (TANPA LENGKUNGAN) */
         .header-section {
             background: var(--primary);
-            padding: 90px 20px 40px;
+            padding: 100px 20px 40px;
             text-align: center;
-            border-bottom: 5px solid #4a0000; /* Garis pembatas tegas */
+            border-bottom: 5px solid #4a0000;
             margin-bottom: 0;
+            border-radius: 0; /* Tetap Kotak */
         }
 
         .header-section h1 { 
-            font-size: 24px; 
-            font-weight: 800; 
-            margin: 0; 
-            color: white;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 24px; font-weight: 800; margin: 0; color: white;
+            letter-spacing: 2px; text-transform: uppercase;
         }
 
         .header-section p { 
-            font-size: 12px; 
-            color: rgba(255,255,255,0.8); 
-            margin-top: 10px; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 10px; 
+            font-weight: 600; text-transform: uppercase;
         }
 
         /* LIST MONITORING */
-        .list-wrapper { 
-            width: 100%; 
-            background: var(--white);
-        }
-
-        .row { 
-            display: flex; 
-            align-items: center; 
-            padding: 20px; 
-            border-bottom: 1px solid #eeeeee; 
-        }
+        .list-wrapper { width: 100%; background: var(--bg); }
+        .row { display: flex; align-items: center; padding: 20px; border-bottom: 1px solid #f1f5f9; }
 
         .num { font-weight: 800; color: var(--primary); width: 30px; font-size: 16px; }
         .name { flex: 1; font-size: 14px; font-weight: 600; color: var(--secondary); text-transform: uppercase; }
 
+        /* BADGE LENGKUNG */
         .badge { 
-            padding: 6px 12px; 
+            padding: 8px 16px; 
+            border-radius: 10px; /* Lengkung */
             font-size: 10px; 
             font-weight: 800; 
             text-transform: uppercase; 
-            border: 1px solid transparent;
         }
         .selesai { background: #dcfce7; color: #15803d; }
-        .proses { background: #ffffff; color: #64748b; border: 1px solid #cccccc; }
+        .proses { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
 
         @media (min-width: 1024px) {
-            .sidebar { left: 0; width: 320px; border-right: 1px solid #ddd; }
+            .sidebar { left: 0; width: 320px; height: 100vh; top: 0; border-radius: 0; }
             .main-content { margin-left: 320px; }
             .menu-label, .click-outside { display: none !important; }
-            .header-section { padding-top: 60px; }
         }
     </style>
 </head>
