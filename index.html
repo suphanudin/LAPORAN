@@ -8,7 +8,6 @@
     <style>
         :root {
             --primary: #8b0000;
-            --primary-light: #b30000;
             --secondary: #0f172a;
             --accent: #10b981;
             --bg: #f8fafc;
@@ -96,12 +95,9 @@
             padding: 16px; background: #f1f5f9; margin-bottom: 12px;
             border-radius: 14px; text-decoration: none; color: var(--secondary);
             font-weight: 700; font-size: 14px; display: flex; align-items: center;
-            border: 1px solid transparent;
         }
 
-        .sidebar-link:hover { background: #e2e8f0; border-color: #cbd5e1; }
-
-        /* INFO CARD DI SIDEBAR */
+        /* INFO CARD */
         .info-card {
             background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
             border: 1.5px dashed #fee2e2; padding: 18px; border-radius: 18px;
@@ -126,23 +122,13 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
         
-        .row { 
-            display: flex; align-items: center; padding: 20px; 
-            border-bottom: 1px solid #f1f5f9; 
-        }
+        .row { display: flex; align-items: center; padding: 20px; border-bottom: 1px solid #f1f5f9; }
         .row:last-child { border: none; }
 
         .num { font-weight: 800; color: var(--primary); width: 30px; font-size: 15px; opacity: 0.5; }
-        .name { 
-            flex: 1; font-size: 13px; font-weight: 700; 
-            color: var(--secondary); padding-left: 8px; line-height: 1.4;
-        }
+        .name { flex: 1; font-size: 13px; font-weight: 700; color: var(--secondary); padding-left: 8px; text-transform: uppercase; }
         
-        .badge { 
-            padding: 8px 16px; border-radius: 12px; font-size: 9px; 
-            font-weight: 800; min-width: 85px; text-align: center;
-            letter-spacing: 0.5px;
-        }
+        .badge { padding: 8px 16px; border-radius: 12px; font-size: 9px; font-weight: 800; min-width: 85px; text-align: center; }
         .selesai { background: #ecfdf5; color: #059669; }
         .proses { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
 
@@ -155,30 +141,21 @@
     <label for="menu-toggle" class="overlay-bg"></label>
     
     <div class="sidebar">
-        <div class="sidebar-title">NAVIGASI UTAMA</div>
+        <div class="sidebar-title">NAVIGASI</div>
         <a href="#" class="sidebar-link">🏠 Beranda</a>
         
-        <div class="sidebar-title" style="margin-top: 10px;">DETAIL PEMBAYARAN</div>
+        <div class="sidebar-title" style="margin-top: 10px;">PEMBAYARAN</div>
         <div class="info-card">
-            <div class="info-item">
-                <span>Harga Joki</span>
-                <span>Rp 50.000</span>
-            </div>
-            <div class="info-item">
-                <span>Metode</span>
-                <span>DANA</span>
-            </div>
-            <div style="margin-top: 10px; font-size: 15px; text-align: center; font-weight: 800; color: #008ced;">
-                085783252407
-            </div>
+            <div class="info-item"><span>Harga Joki</span><span>Rp 50.000</span></div>
+            <div class="info-item"><span>DANA</span><span>085783252407</span></div>
         </div>
         
-        <a href="https://wa.me/6285874053845" class="btn-wa">Chat Admin Sekarang</a>
+        <a href="https://wa.me/6285874053845" class="btn-wa">Chat Admin</a>
     </div>
 
     <div class="header-section">
         <h1>MONITORING</h1>
-        <p>Laporan Real-Time Pengerjaan</p>
+        <p>PENGERJAAN REAL-TIME</p>
     </div>
 
     <div class="list-container">
@@ -186,9 +163,12 @@
             <div class="row"><div class="num">01</div><div class="name">Muhamad Fauzi Nor Alif</div><div class="badge proses">PROSES</div></div>
             <div class="row"><div class="num">02</div><div class="name">Rifki Khusnul Khotim</div><div class="badge proses">PROSES</div></div>
             <div class="row"><div class="num">03</div><div class="name">Apri Alpindo Anggara</div><div class="badge proses">PROSES</div></div>
-            <div class="row"><div class="num">04</div><div class="name">Ahmad Maulana</div><div class="badge selesai">SELESAI</div></div>
-            <div class="row"><div class="num">05</div><div class="name">M. Iqbal</div><div class="badge selesai">SELESAI</div></div>
-            <div class="row"><div class="num">06</div><div class="name">Sahriadi</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">04</div><div class="name">Jaenal Asikin</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">05</div><div class="name">Ahmad Maulana</div><div class="badge selesai">SELESAI</div></div>
+            <div class="row"><div class="num">06</div><div class="name">Adia Priantono</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">07</div><div class="name">M. Iqbal</div><div class="badge selesai">SELESAI</div></div>
+            <div class="row"><div class="num">08</div><div class="name">Natanael Dennes Christian</div><div class="badge proses">PROSES</div></div>
+            <div class="row"><div class="num">09</div><div class="name">Sahriadi</div><div class="badge proses">PROSES</div></div>
         </div>
     </div>
 
