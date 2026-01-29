@@ -34,11 +34,27 @@
 
         /* --- LIST STYLE --- */
         .list-container { padding: 20px 15px; }
-        .list-wrapper { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .list-wrapper { 
+            background: white; 
+            border-radius: 24px; 
+            overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            /* Inisialisasi Counter */
+            counter-reset: urutan; 
+        }
         .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
         .name-wrapper { flex: 1; padding-left: 10px; }
+        
+        /* Implementasi Nomor Otomatis */
         .name { font-size: 12px; font-weight: 700; text-transform: uppercase; }
-        .pay-status { font-size: 9px; font-weight: 800; margin-top: 4px; }
+        .name::before {
+            counter-increment: urutan;
+            content: counter(urutan) ". ";
+            color: var(--primary);
+            margin-right: 4px;
+        }
+
+        .pay-status { font-size: 9px; font-weight: 800; margin-top: 4px; padding-left: 18px; }
         .done { color: var(--accent); }
         .unpaid { color: var(--warning); }
         .badge { padding: 8px 12px; border-radius: 10px; font-size: 9px; font-weight: 800; min-width: 80px; text-align: center; }
