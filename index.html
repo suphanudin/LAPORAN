@@ -14,50 +14,61 @@
             --bg: #f8fafc;
         }
 
-        /* --- EFEK GLOSSY / HOLOGRAM (KILAU) --- */
+        /* --- EFEK ULTRA GLOSSY HOLOGRAM --- */
         body::before {
             content: "";
             position: fixed;
             top: 0;
             left: -150%;
-            width: 300%;
-            height: 100%;
+            width: 400%;
+            height: 200%;
+            /* Perpaduan cahaya putih tajam dan warna pelangi tipis */
             background: linear-gradient(
-                120deg, 
-                rgba(255, 255, 255, 0) 30%, 
-                rgba(255, 255, 255, 0.15) 50%, 
-                rgba(255, 255, 255, 0) 70%
+                105deg, 
+                rgba(255,255,255,0) 35%, 
+                rgba(255,255,255,0.4) 45%, 
+                rgba(0,255,255,0.1) 48%, 
+                rgba(255,0,255,0.1) 52%, 
+                rgba(255,255,255,0.4) 55%, 
+                rgba(255,255,255,0) 65%
             );
             z-index: 9999;
-            pointer-events: none; /* Agar tidak menghalangi klik */
-            animation: kilau 4s infinite linear;
+            pointer-events: none;
+            animation: superKilau 3s infinite ease-in-out;
+            transform: rotate(-20deg);
         }
 
-        @keyframes kilau {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(100%); }
+        @keyframes superKilau {
+            0% { transform: translateX(0) rotate(-20deg); }
+            100% { transform: translateX(50%) rotate(-20deg); }
         }
 
-        /* --- CSS ASLI --- */
+        /* Memberikan efek glossy tambahan pada card */
+        .list-wrapper, .header-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- CSS DASAR --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); min-height: 100vh; color: var(--secondary); overflow-x: hidden; }
 
         #menu-toggle { display: none; }
-        .menu-btn { position: fixed; left: 15px; top: 15px; z-index: 10000; background: rgba(0,0,0,0.3); color: white; padding: 10px 18px; border-radius: 12px; font-size: 12px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); cursor: pointer; }
+        .menu-btn { position: fixed; left: 15px; top: 15px; z-index: 10000; background: rgba(0,0,0,0.5); color: white; padding: 10px 18px; border-radius: 12px; font-size: 12px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); cursor: pointer; }
         .sidebar { position: fixed; left: -110%; top: 0; width: 85%; max-width: 320px; height: 100vh; background: white; z-index: 9000; transition: 0.4s; padding: 80px 24px 30px; display: flex; flex-direction: column; border-radius: 0 30px 30px 0; }
         #menu-toggle:checked ~ .sidebar { left: 0; }
         .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; z-index: 8000; backdrop-filter: blur(4px); }
         #menu-toggle:checked ~ .overlay-bg { display: block; }
 
-        .header-section { background: var(--primary); padding: 60px 20px 40px; text-align: center; position: relative; overflow: hidden; }
-        .header-section h1 { font-size: 20px; color: white; margin: 0; letter-spacing: 2px; font-weight: 800; line-height: 1.4; position: relative; z-index: 2; }
+        .header-section { background: var(--primary); padding: 60px 20px 40px; text-align: center; }
+        .header-section h1 { font-size: 20px; color: white; margin: 0; letter-spacing: 2px; font-weight: 800; line-height: 1.4; }
         
         .search-container { padding: 0 20px; margin-top: -20px; position: relative; z-index: 10; }
         .search-box { width: 100%; padding: 15px 20px; border-radius: 15px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: inherit; font-weight: 600; font-size: 14px; outline: none; }
 
         .list-container { padding: 20px 15px; }
-        .list-wrapper { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); counter-reset: urutan; }
-        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
+        .list-wrapper { background: white; border-radius: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); counter-reset: urutan; }
+        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; position: relative; }
         .name-wrapper { flex: 1; display: flex; flex-direction: column; }
         
         .name { font-size: 12px; font-weight: 700; text-transform: uppercase; display: flex; align-items: flex-start; }
@@ -110,66 +121,39 @@
     <div class="list-container">
         <div class="list-wrapper" id="listWrapper">
             <div class="row" data-name="Muhamad Fauzi Nor Alif">
-                <div class="name-wrapper">
-                    <div class="name">Muhamad Fauzi Nor Alif</div>
-                    <div class="pay-status unpaid">● UNPAID</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Muhamad Fauzi Nor Alif</div><div class="pay-status unpaid">● UNPAID</div></div>
                 <div class="badge selesai">SELESAI</div>
             </div>
             <div class="row" data-name="Rifki Khusnul Khotim">
-                <div class="name-wrapper">
-                    <div class="name">Rifki Khusnul Khotim</div>
-                    <div class="pay-status unpaid">● UNPAID</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Rifki Khusnul Khotim</div><div class="pay-status unpaid">● UNPAID</div></div>
                 <div class="badge proses">PROSES</div>
             </div>
             <div class="row" data-name="Apri Alpindo Anggara">
-                <div class="name-wrapper">
-                    <div class="name">Apri Alpindo Anggara</div>
-                    <div class="pay-status done">● PAYMENT DONE</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Apri Alpindo Anggara</div><div class="pay-status done">● PAYMENT DONE</div></div>
                 <div class="badge selesai">SELESAI</div>
             </div>
             <div class="row" data-name="Jaenal Asikin">
-                <div class="name-wrapper">
-                    <div class="name">Jaenal Asikin</div>
-                    <div class="pay-status unpaid">● UNPAID</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Jaenal Asikin</div><div class="pay-status unpaid">● UNPAID</div></div>
                 <div class="badge proses">PROSES</div>
             </div>
             <div class="row" data-name="Ahmad Maulana">
-                <div class="name-wrapper">
-                    <div class="name">Ahmad Maulana</div>
-                    <div class="pay-status unpaid">● UNPAID</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Ahmad Maulana</div><div class="pay-status unpaid">● UNPAID</div></div>
                 <div class="badge selesai">SELESAI</div>
             </div>
             <div class="row" data-name="Adia Priantono">
-                <div class="name-wrapper">
-                    <div class="name">Adia Priantono</div>
-                    <div class="pay-status unpaid">● UNPAID</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Adia Priantono</div><div class="pay-status unpaid">● UNPAID</div></div>
                 <div class="badge selesai">SELESAI</div>
             </div>
             <div class="row" data-name="M. Iqbal">
-                <div class="name-wrapper">
-                    <div class="name">M. Iqbal</div>
-                    <div class="pay-status done">● PAYMENT DONE</div>
-                </div>
+                <div class="name-wrapper"><div class="name">M. Iqbal</div><div class="pay-status done">● PAYMENT DONE</div></div>
                 <div class="badge selesai">SELESAI</div>
             </div>
             <div class="row" data-name="Natanael Dennes Christian">
-                <div class="name-wrapper">
-                    <div class="name">Natanael Dennes Christian</div>
-                    <div class="pay-status unpaid">● UNPAID</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Natanael Dennes Christian</div><div class="pay-status unpaid">● UNPAID</div></div>
                 <div class="badge proses">PROSES</div>
             </div>
             <div class="row" data-name="Sahriadi">
-                <div class="name-wrapper">
-                    <div class="name">Sahriadi</div>
-                    <div class="pay-status done">● PAYMENT DONE</div>
-                </div>
+                <div class="name-wrapper"><div class="name">Sahriadi</div><div class="pay-status done">● PAYMENT DONE</div></div>
                 <div class="badge proses">PROSES</div>
             </div>
         </div>
