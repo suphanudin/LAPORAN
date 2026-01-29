@@ -12,127 +12,46 @@
             --accent: #10b981;
             --warning: #f59e0b;
             --bg: #f8fafc;
-            --radius: 16px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            margin: 0; 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); 
-            min-height: 100vh;
-            color: var(--secondary);
-        }
+        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); min-height: 100vh; color: var(--secondary); }
 
-        /* --- ANIMASI TEKAN --- */
-        .sidebar-link, .row, .btn-wa { transition: all 0.2s ease; cursor: pointer; }
-        .sidebar-link:active, .row:active, .btn-wa:active { transform: scale(0.98); }
-
-        /* --- HEADER HOLOGRAM --- */
-        .header-section {
-            background: var(--primary);
-            position: relative;
-            padding: 60px 20px 30px;
-            text-align: center;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(139, 0, 0, 0.2);
-        }
-
-        .header-section::before {
-            content: "";
-            position: absolute;
-            top: 0; left: -150%;
-            width: 60%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: skewX(-30deg);
-            animation: shine 5s infinite;
-        }
-
-        @keyframes shine { 0% { left: -150%; } 100% { left: 150%; } }
-
-        .header-section h1 { 
-            font-size: 20px; color: white; margin: 0; 
-            letter-spacing: 3px; text-transform: uppercase; font-weight: 800;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-        }
-
-        .header-section p {
-            font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 8px; 
-            letter-spacing: 1px; font-weight: 600; text-transform: uppercase;
-        }
-
-        /* --- SIDEBAR MODERN --- */
+        /* --- SIDEBAR & QRIS --- */
         #menu-toggle { display: none; }
-        .menu-btn {
-            position: fixed; left: 15px; top: 15px; z-index: 10000;
-            background: rgba(255,255,255,0.15); color: white;
-            padding: 10px 18px; border-radius: 12px; font-size: 12px; font-weight: 800;
-            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);
-        }
-
-        .sidebar {
-            position: fixed; left: -110%; top: 0; width: 85%; max-width: 320px;
-            height: 100vh; background: white; z-index: 9000; 
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 80px 24px 30px; display: flex; flex-direction: column;
-            border-radius: 0 30px 30px 0;
-        }
-
+        .menu-btn { position: fixed; left: 15px; top: 15px; z-index: 10000; background: rgba(0,0,0,0.3); color: white; padding: 10px 18px; border-radius: 12px; font-size: 12px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); cursor: pointer; }
+        .sidebar { position: fixed; left: -110%; top: 0; width: 85%; max-width: 320px; height: 100vh; background: white; z-index: 9000; transition: 0.4s; padding: 80px 24px 30px; display: flex; flex-direction: column; border-radius: 0 30px 30px 0; overflow-y: auto; }
         #menu-toggle:checked ~ .sidebar { left: 0; }
-        .overlay-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.4); display: none; z-index: 8000;
-            backdrop-filter: blur(4px);
-        }
+        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; z-index: 8000; backdrop-filter: blur(4px); }
         #menu-toggle:checked ~ .overlay-bg { display: block; }
 
-        .sidebar-link {
-            padding: 16px; background: #f1f5f9; margin-bottom: 12px;
-            border-radius: 14px; text-decoration: none; color: var(--secondary);
-            font-weight: 700; font-size: 14px; display: flex; align-items: center;
-        }
+        .qris-container { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 20px; padding: 15px; text-align: center; margin-top: 10px; }
+        .qris-container img { width: 100%; border-radius: 10px; border: 1px solid #ddd; }
+        .qris-text { font-size: 10px; font-weight: 800; color: #64748b; margin-top: 8px; }
 
-        .info-card {
-            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
-            border: 1.5px dashed #fee2e2; padding: 18px; border-radius: 18px;
-            margin-bottom: 20px;
-        }
-
-        .info-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
-        .info-item span:first-child { color: #64748b; font-weight: 600; }
-        .info-item span:last-child { color: var(--primary); font-weight: 800; }
-
-        .btn-wa {
-            display: block; background: var(--accent); color: white;
-            padding: 18px; text-align: center; border-radius: 18px;
-            text-decoration: none; font-weight: 800; margin-top: auto;
-            font-size: 15px; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
-        }
-
-        /* --- MONITORING LIST --- */
-        .list-container { padding: 10px; margin-top: -15px; position: relative; z-index: 2; }
-        .list-wrapper { 
-            background: white; border-radius: 24px; overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
+        /* --- HEADER & SEARCH --- */
+        .header-section { background: var(--primary); padding: 60px 20px 40px; text-align: center; position: relative; }
+        .header-section h1 { font-size: 20px; color: white; margin: 0; letter-spacing: 3px; font-weight: 800; }
         
-        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
-        .row:last-child { border: none; }
+        .search-container { padding: 0 20px; margin-top: -20px; position: relative; z-index: 10; }
+        .search-box { width: 100%; padding: 15px 20px; border-radius: 15px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: inherit; font-weight: 600; font-size: 14px; outline: none; }
 
-        .num { font-weight: 800; color: var(--primary); width: 30px; font-size: 14px; opacity: 0.5; }
-        
-        .name-wrapper { flex: 1; display: flex; flex-direction: column; padding-left: 8px; }
-        .name { font-size: 12px; font-weight: 700; color: var(--secondary); text-transform: uppercase; }
-        
-        .pay-status { font-size: 9px; font-weight: 800; margin-top: 4px; letter-spacing: 0.5px; }
+        /* --- LIST STYLE --- */
+        .list-container { padding: 20px 15px; }
+        .list-wrapper { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; transition: 0.2s; }
+        .name-wrapper { flex: 1; padding-left: 10px; }
+        .name { font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .pay-status { font-size: 9px; font-weight: 800; margin-top: 4px; }
         .done { color: var(--accent); }
         .unpaid { color: var(--warning); }
-
         .badge { padding: 8px 12px; border-radius: 10px; font-size: 9px; font-weight: 800; min-width: 80px; text-align: center; }
         .selesai { background: #ecfdf5; color: #059669; }
         .proses { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
 
+        .info-card { background: #fff5f5; border: 1.5px dashed #fee2e2; padding: 15px; border-radius: 15px; margin-bottom: 15px; }
+        .info-item { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+        .btn-wa { display: block; background: var(--accent); color: white; padding: 15px; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 800; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -142,23 +61,33 @@
     <label for="menu-toggle" class="overlay-bg"></label>
     
     <div class="sidebar">
-        <div class="sidebar-link">🏠 Beranda</div>
+        <div style="font-weight: 800; font-size: 12px; color: #94a3b8; margin-bottom: 10px;">PEMBAYARAN</div>
         <div class="info-card">
-            <div class="info-item"><span>Harga Joki</span><span>Rp 50.000</span></div>
-            <div class="info-item"><span>DANA</span><span>085783252407</span></div>
+            <div class="info-item"><span>Harga Joki</span><span style="font-weight: 800;">Rp 50.000</span></div>
+            <div class="info-item"><span>Nomor DANA</span><span style="font-weight: 800;">085783252407</span></div>
         </div>
-        <a href="https://wa.me/6285874053845" class="btn-wa">Chat Admin</a>
+
+        <div class="qris-container">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=GOPAY_ANDA" alt="QRIS GOPAY">
+            <div class="qris-text">SCAN QRIS UNTUK BAYAR</div>
+        </div>
+
+        <a href="https://wa.me/6285874053845" class="btn-wa">Konfirmasi Bayar</a>
     </div>
 
     <div class="header-section">
         <h1>MONITORING</h1>
-        <p>JOB PROGRESS & PAYMENT</p>
+        <p style="color: rgba(255,255,255,0.6); font-size: 10px; font-weight: 600;">JOB PROGRESS & PAYMENT</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="Cari nama Anda...">
     </div>
 
     <div class="list-container">
-        <div class="list-wrapper">
-            <div class="row">
-                <div class="num">01</div>
+        <div class="list-wrapper" id="listWrapper">
+            
+            <div class="row" data-name="Muhamad Fauzi Nor Alif">
                 <div class="name-wrapper">
                     <div class="name">Muhamad Fauzi Nor Alif</div>
                     <div class="pay-status unpaid">● UNPAID</div>
@@ -166,8 +95,7 @@
                 <div class="badge selesai">SELESAI</div>
             </div>
 
-            <div class="row">
-                <div class="num">02</div>
+            <div class="row" data-name="Rifki Khusnul Khotim">
                 <div class="name-wrapper">
                     <div class="name">Rifki Khusnul Khotim</div>
                     <div class="pay-status unpaid">● UNPAID</div>
@@ -175,8 +103,7 @@
                 <div class="badge proses">PROSES</div>
             </div>
 
-            <div class="row">
-                <div class="num">03</div>
+            <div class="row" data-name="Apri Alpindo Anggara">
                 <div class="name-wrapper">
                     <div class="name">Apri Alpindo Anggara</div>
                     <div class="pay-status done">● PAYMENT DONE</div>
@@ -184,8 +111,7 @@
                 <div class="badge selesai">SELESAI</div>
             </div>
 
-            <div class="row">
-                <div class="num">04</div>
+            <div class="row" data-name="Jaenal Asikin">
                 <div class="name-wrapper">
                     <div class="name">Jaenal Asikin</div>
                     <div class="pay-status unpaid">● UNPAID</div>
@@ -193,8 +119,7 @@
                 <div class="badge proses">PROSES</div>
             </div>
 
-            <div class="row">
-                <div class="num">05</div>
+            <div class="row" data-name="Ahmad Maulana">
                 <div class="name-wrapper">
                     <div class="name">Ahmad Maulana</div>
                     <div class="pay-status unpaid">● UNPAID</div>
@@ -202,8 +127,7 @@
                 <div class="badge selesai">SELESAI</div>
             </div>
 
-            <div class="row">
-                <div class="num">06</div>
+            <div class="row" data-name="Adia Priantono">
                 <div class="name-wrapper">
                     <div class="name">Adia Priantono</div>
                     <div class="pay-status unpaid">● UNPAID</div>
@@ -211,8 +135,7 @@
                 <div class="badge selesai">SELESAI</div>
             </div>
 
-            <div class="row">
-                <div class="num">07</div>
+            <div class="row" data-name="M. Iqbal">
                 <div class="name-wrapper">
                     <div class="name">M. Iqbal</div>
                     <div class="pay-status done">● PAYMENT DONE</div>
@@ -220,8 +143,7 @@
                 <div class="badge selesai">SELESAI</div>
             </div>
 
-            <div class="row">
-                <div class="num">08</div>
+            <div class="row" data-name="Natanael Dennes Christian">
                 <div class="name-wrapper">
                     <div class="name">Natanael Dennes Christian</div>
                     <div class="pay-status unpaid">● UNPAID</div>
@@ -229,16 +151,27 @@
                 <div class="badge proses">PROSES</div>
             </div>
 
-            <div class="row">
-                <div class="num">09</div>
+            <div class="row" data-name="Sahriadi">
                 <div class="name-wrapper">
                     <div class="name">Sahriadi</div>
                     <div class="pay-status done">● PAYMENT DONE</div>
                 </div>
-                <div class="badge selesai">SELESAI</div>
+                <div class="badge proses">PROSES</div>
             </div>
+
         </div>
     </div>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filter = this.value.toUpperCase();
+            let rows = document.getElementById('listWrapper').getElementsByClassName('row');
+            for (let i = 0; i < rows.length; i++) {
+                let name = rows[i].getAttribute('data-name');
+                rows[i].style.display = name.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+            }
+        });
+    </script>
 
 </body>
 </html>
