@@ -39,13 +39,12 @@
             border-radius: 24px; 
             overflow: hidden; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            /* Inisialisasi Counter */
             counter-reset: urutan; 
         }
         .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; }
         .name-wrapper { flex: 1; padding-left: 10px; }
         
-        /* Implementasi Nomor Otomatis */
+        /* Nomor Otomatis */
         .name { font-size: 12px; font-weight: 700; text-transform: uppercase; }
         .name::before {
             counter-increment: urutan;
@@ -162,6 +161,14 @@
                 <div class="name-wrapper">
                     <div class="name">Sahriadi</div>
                     <div class="pay-status done">● PAYMENT DONE</div>
+                </div>
+                <div class="badge proses">PROSES</div>
+            </div>
+
+            <div class="row" data-name="IVAN EVENDI">
+                <div class="name-wrapper">
+                    <div class="name">IVAN EVENDI</div>
+                    <div class="pay-status unpaid">● UNPAID</div>
                 </div>
                 <div class="badge proses">PROSES</div>
             </div>
