@@ -8,89 +8,203 @@
     <style>
         :root {
             --primary: #8b0000;
+            --primary-dark: #5a0000;
             --secondary: #0f172a;
             --accent: #10b981;
             --warning: #f59e0b;
-            --bg: #f8fafc;
+            --bg: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.85);
         }
 
-        /* --- EFEK ULTRA GLOSSY HOLOGRAM --- */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: -150%;
-            width: 400%;
-            height: 200%;
-            /* Perpaduan cahaya putih tajam dan warna pelangi tipis */
-            background: linear-gradient(
-                105deg, 
-                rgba(255,255,255,0) 35%, 
-                rgba(255,255,255,0.4) 45%, 
-                rgba(0,255,255,0.1) 48%, 
-                rgba(255,0,255,0.1) 52%, 
-                rgba(255,255,255,0.4) 55%, 
-                rgba(255,255,255,0) 65%
-            );
-            z-index: 9999;
-            pointer-events: none;
-            animation: superKilau 3s infinite ease-in-out;
-            transform: rotate(-20deg);
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
         }
 
-        @keyframes superKilau {
-            0% { transform: translateX(0) rotate(-20deg); }
-            100% { transform: translateX(50%) rotate(-20deg); }
+        body { 
+            margin: 0; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg);
+            background-image: radial-gradient(circle at top right, #e2e8f0, transparent),
+                              radial-gradient(circle at bottom left, #e2e8f0, transparent);
+            min-height: 100vh; 
+            color: var(--secondary); 
+            overflow-x: hidden; 
         }
 
-        /* Memberikan efek glossy tambahan pada card */
-        .list-wrapper, .header-section {
+        /* --- SIDEBAR & NAVIGATION --- */
+        #menu-toggle { display: none; }
+        .menu-btn { 
+            position: fixed; 
+            left: 15px; 
+            top: 15px; 
+            z-index: 10000; 
+            background: var(--secondary); 
+            color: white; 
+            padding: 12px 20px; 
+            border-radius: 12px; 
+            font-size: 11px; 
+            font-weight: 800; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            cursor: pointer; 
+        }
+
+        .sidebar { 
+            position: fixed; 
+            left: -110%; 
+            top: 0; 
+            width: 85%; 
+            max-width: 300px; 
+            height: 100vh; 
+            background: white; 
+            z-index: 9000; 
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding: 80px 24px 30px; 
+            box-shadow: 20px 0 50px rgba(0,0,0,0.05);
+        }
+
+        #menu-toggle:checked ~ .sidebar { left: 0; }
+        .overlay-bg { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(15, 23, 42, 0.3); 
+            display: none; 
+            z-index: 8000; 
+            backdrop-filter: blur(4px); 
+        }
+        #menu-toggle:checked ~ .overlay-bg { display: block; }
+
+        /* --- HEADER --- */
+        .header-section { 
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 
+            padding: 70px 20px 50px; 
+            text-align: center;
             position: relative;
+        }
+
+        .header-section h1 { 
+            font-size: 22px; 
+            color: white; 
+            margin: 0; 
+            letter-spacing: 1px; 
+            font-weight: 800; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* --- SEARCH BOX --- */
+        .search-container { padding: 0 20px; margin-top: -25px; position: relative; z-index: 10; }
+        .search-box { 
+            width: 100%; 
+            padding: 18px 25px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.3); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+            font-family: inherit; 
+            font-weight: 600; 
+            font-size: 14px; 
+            outline: none;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        /* --- LIST DATA --- */
+        .list-container { padding: 30px 15px; }
+        .list-wrapper { 
+            background: var(--glass); 
+            backdrop-filter: blur(10px);
+            border-radius: 28px; 
+            border: 1px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); 
+            counter-reset: urutan; 
             overflow: hidden;
         }
 
-        /* --- CSS DASAR --- */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); min-height: 100vh; color: var(--secondary); overflow-x: hidden; }
+        .row { 
+            display: flex; 
+            align-items: center; 
+            padding: 20px; 
+            border-bottom: 1px solid rgba(0,0,0,0.03); 
+            transition: 0.3s;
+        }
 
-        #menu-toggle { display: none; }
-        .menu-btn { position: fixed; left: 15px; top: 15px; z-index: 10000; background: rgba(0,0,0,0.5); color: white; padding: 10px 18px; border-radius: 12px; font-size: 12px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); cursor: pointer; }
-        .sidebar { position: fixed; left: -110%; top: 0; width: 85%; max-width: 320px; height: 100vh; background: white; z-index: 9000; transition: 0.4s; padding: 80px 24px 30px; display: flex; flex-direction: column; border-radius: 0 30px 30px 0; }
-        #menu-toggle:checked ~ .sidebar { left: 0; }
-        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; z-index: 8000; backdrop-filter: blur(4px); }
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
+        .row:last-child { border-bottom: none; }
 
-        .header-section { background: var(--primary); padding: 60px 20px 40px; text-align: center; }
-        .header-section h1 { font-size: 20px; color: white; margin: 0; letter-spacing: 2px; font-weight: 800; line-height: 1.4; }
+        .name-wrapper { flex: 1; }
         
-        .search-container { padding: 0 20px; margin-top: -20px; position: relative; z-index: 10; }
-        .search-box { width: 100%; padding: 15px 20px; border-radius: 15px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: inherit; font-weight: 600; font-size: 14px; outline: none; }
+        .name { 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: var(--secondary);
+            display: flex; 
+        }
 
-        .list-container { padding: 20px 15px; }
-        .list-wrapper { background: white; border-radius: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); counter-reset: urutan; }
-        .row { display: flex; align-items: center; padding: 18px 20px; border-bottom: 1px solid #f1f5f9; position: relative; }
-        .name-wrapper { flex: 1; display: flex; flex-direction: column; }
-        
-        .name { font-size: 12px; font-weight: 700; text-transform: uppercase; display: flex; align-items: flex-start; }
         .name::before {
             counter-increment: urutan;
             content: counter(urutan) ".";
             color: var(--primary);
+            margin-right: 10px;
             font-weight: 800;
-            min-width: 25px;
+        }
+
+        .pay-status { 
+            font-size: 10px; 
+            font-weight: 800; 
+            margin-top: 6px; 
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .pay-status::before {
+            content: "";
+            width: 6px; height: 6px;
+            border-radius: 50%;
             display: inline-block;
         }
 
-        .pay-status { font-size: 9px; font-weight: 800; margin-top: 4px; padding-left: 25px; }
         .done { color: var(--accent); }
+        .done::before { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        
         .unpaid { color: var(--warning); }
-        .badge { padding: 8px 12px; border-radius: 10px; font-size: 9px; font-weight: 800; min-width: 80px; text-align: center; }
-        .selesai { background: #ecfdf5; color: #059669; }
-        .proses { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
+        .unpaid::before { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
 
-        .info-card { background: #fff5f5; border: 1.5px dashed #fee2e2; padding: 15px; border-radius: 15px; margin-bottom: 15px; }
-        .info-item { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
-        .btn-wa { display: block; background: var(--accent); color: white; padding: 15px; text-align: center; border-radius: 15px; text-decoration: none; font-weight: 800; margin-top: auto; }
+        .badge { 
+            padding: 10px 16px; 
+            border-radius: 14px; 
+            font-size: 10px; 
+            font-weight: 800; 
+            min-width: 90px; 
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .selesai { background: #dcfce7; color: #166534; }
+        .proses { background: #f1f5f9; color: #475569; }
+
+        /* --- INFO CARD DI SIDEBAR --- */
+        .info-card { 
+            background: #fff5f5; 
+            border-radius: 18px; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border: 1px solid #fee2e2;
+        }
+
+        .info-item { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; }
+        
+        .btn-wa { 
+            display: block; 
+            background: var(--accent); 
+            color: white; 
+            padding: 18px; 
+            text-align: center; 
+            border-radius: 18px; 
+            text-decoration: none; 
+            font-weight: 800; 
+            margin-top: auto;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -100,60 +214,67 @@
     <label for="menu-toggle" class="overlay-bg"></label>
     
     <div class="sidebar">
-        <div style="font-weight: 800; font-size: 12px; color: #94a3b8; margin-bottom: 10px;">PEMBAYARAN</div>
+        <div style="font-weight: 800; font-size: 13px; color: #64748b; margin-bottom: 15px; letter-spacing: 1px;">METODE PEMBAYARAN</div>
         <div class="info-card">
-            <div class="info-item"><span>Harga Joki</span><span style="font-weight: 800;">Rp 50.000</span></div>
-            <div class="info-item"><span>Nomor DANA</span><span style="font-weight: 800;">085783252407</span></div>
+            <div class="info-item"><span>Tarif Joki</span><span style="font-weight: 800; color: var(--primary);">Rp 50.000</span></div>
+            <div class="info-item"><span>E-Wallet</span><span style="font-weight: 800;">DANA</span></div>
+            <div class="info-item" style="flex-direction: column; gap: 5px; margin-top: 10px;">
+                <span style="font-size: 11px; color: #94a3b8;">Nomor Rekening:</span>
+                <span style="font-weight: 800; font-size: 16px; color: var(--secondary);">085783252407</span>
+            </div>
         </div>
-        <p style="font-size: 11px; color: #64748b; line-height: 1.5;">Silahkan lakukan pembayaran ke nomor di atas dan kirim bukti transfer melalui WhatsApp.</p>
-        <a href="https://wa.me/6285874053845" class="btn-wa">Konfirmasi Bayar</a>
+        <p style="font-size: 12px; color: #64748b; line-height: 1.6;">Setelah transfer, mohon kirimkan tangkapan layar (screenshot) bukti pembayaran ke WhatsApp saya agar status segera diupdate.</p>
+        <a href="https://wa.me/6285874053845" class="btn-wa">Kirim Bukti Bayar</a>
     </div>
 
     <div class="header-section">
-        <h1>JOKI TUGAS LAPORAN PKL</h1>
-        <p style="color: rgba(255,255,255,0.6); font-size: 10px; font-weight: 600;">JOB PROGRESS & PAYMENT</p>
+        <h1>LAPORAN PKL BOSS</h1>
+        <p style="color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 600; margin-top: 8px; letter-spacing: 1px;">MONITORING & PAYMENT SYSTEM</p>
     </div>
 
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-box" placeholder="Cari nama Anda...">
+        <input type="text" id="searchInput" class="search-box" placeholder="Cari nama Anda di sini...">
     </div>
 
     <div class="list-container">
         <div class="list-wrapper" id="listWrapper">
             <div class="row" data-name="Muhamad Fauzi Nor Alif">
-                <div class="name-wrapper"><div class="name">Muhamad Fauzi Nor Alif</div><div class="pay-status unpaid">● UNPAID</div></div>
+                <div class="name-wrapper">
+                    <div class="name">Muhamad Fauzi Nor Alif</div>
+                    <div class="pay-status unpaid">UNPAID</div>
+                </div>
                 <div class="badge selesai">SELESAI</div>
             </div>
-            <div class="row" data-name="Rifki Khusnul Khotim">
-                <div class="name-wrapper"><div class="name">Rifki Khusnul Khotim</div><div class="pay-status unpaid">● UNPAID</div></div>
-                <div class="badge proses">PROSES</div>
-            </div>
+
             <div class="row" data-name="Apri Alpindo Anggara">
-                <div class="name-wrapper"><div class="name">Apri Alpindo Anggara</div><div class="pay-status done">● PAYMENT DONE</div></div>
+                <div class="name-wrapper">
+                    <div class="name">Apri Alpindo Anggara</div>
+                    <div class="pay-status done">PAYMENT DONE</div>
+                </div>
                 <div class="badge selesai">SELESAI</div>
             </div>
-            <div class="row" data-name="Jaenal Asikin">
-                <div class="name-wrapper"><div class="name">Jaenal Asikin</div><div class="pay-status unpaid">● UNPAID</div></div>
+
+            <div class="row" data-name="Rifki Khusnul Khotim">
+                <div class="name-wrapper">
+                    <div class="name">Rifki Khusnul Khotim</div>
+                    <div class="pay-status unpaid">UNPAID</div>
+                </div>
                 <div class="badge proses">PROSES</div>
             </div>
-            <div class="row" data-name="Ahmad Maulana">
-                <div class="name-wrapper"><div class="name">Ahmad Maulana</div><div class="pay-status unpaid">● UNPAID</div></div>
-                <div class="badge selesai">SELESAI</div>
-            </div>
-            <div class="row" data-name="Adia Priantono">
-                <div class="name-wrapper"><div class="name">Adia Priantono</div><div class="pay-status unpaid">● UNPAID</div></div>
-                <div class="badge selesai">SELESAI</div>
-            </div>
+
             <div class="row" data-name="M. Iqbal">
-                <div class="name-wrapper"><div class="name">M. Iqbal</div><div class="pay-status done">● PAYMENT DONE</div></div>
+                <div class="name-wrapper">
+                    <div class="name">M. Iqbal</div>
+                    <div class="pay-status done">PAYMENT DONE</div>
+                </div>
                 <div class="badge selesai">SELESAI</div>
             </div>
-            <div class="row" data-name="Natanael Dennes Christian">
-                <div class="name-wrapper"><div class="name">Natanael Dennes Christian</div><div class="pay-status unpaid">● UNPAID</div></div>
-                <div class="badge proses">PROSES</div>
-            </div>
+            
             <div class="row" data-name="Sahriadi">
-                <div class="name-wrapper"><div class="name">Sahriadi</div><div class="pay-status done">● PAYMENT DONE</div></div>
+                <div class="name-wrapper">
+                    <div class="name">Sahriadi</div>
+                    <div class="pay-status done">PAYMENT DONE</div>
+                </div>
                 <div class="badge proses">PROSES</div>
             </div>
         </div>
